@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import withAuth from "../HOC/withAuth";
 import CustomDropdown from "../Components/CustomDropdown";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { useQuery } from "react-query";
+import { getAllCategories, getAllSubCategories } from "../helpers/categories";
 
 function Newsale() {
   const foodItems = [
@@ -8,6 +12,21 @@ function Newsale() {
     { name: "Food 2", qty: 1, unitPrice: 15 },
     { name: "Food 3", qty: 3, unitPrice: 8 },
   ];
+
+
+
+  const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(["store"]);
+
+  const {
+    isError: isError1,
+    isSuccess: isSuccess1,
+    data: data1,
+    refetch: refetch1,
+  } = useQuery(["categories", { cookies }], () => getAllCategories(cookies));
+
+
+
   const foods = [
     {
       name: "Medu Vada",
@@ -137,22 +156,27 @@ function Newsale() {
         <h2 className="text-xl font-semibold mb-4">Product Selection</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="col-span-full sm:col-span-1">
-            <select
-              name="store_id"
-              id="store_select"
-              className="form-select border-2 h-12 w-full rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-            ></select>
+          <label className="input input-bordered flex items-center gap-2">
+              <input type="text" className="grow" placeholder="Search" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="w-4 h-4 opacity-70"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </label>
           </div>
           <div className="col-span-full sm:col-span-1">
-            <select
-              name="category"
-              id="category"
-              className="form-select border-2 h-12 w-full rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-              disabled
-            >
-              <option value="" selected>
-                All categories
-              </option>
+          <select className="select w-full max-w-xs border-gray-300" >
+              {data1?.category?.map((item) => (
+                <option>{item?.name}</option>
+              ))}
             </select>
           </div>
           <div className="col-span-full">
