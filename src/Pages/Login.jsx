@@ -11,9 +11,12 @@ import { authenticate, storeSignIn } from "../helpers/auth";
 import { useCookies } from "react-cookie";
 const Login = () => {
   const navigate = useNavigate();
-  const DemoData = { mail: "Store@gmail.com", password: "123456" };
+  const DemoData = { mail: "rohit9@gmail.com", password: "Rohit123@" };
+
   const [password, setPassword] = useState("");
   const [mail, setMail] = useState("");
+  
+  console.log(mail)
   const [show, setShow] = useState("false");
   const [cookies, setCookie] = useCookies(["store"]);
   const [isLoading, setIsLoading] = useState(false);
