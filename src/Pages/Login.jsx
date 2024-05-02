@@ -18,8 +18,6 @@ const Login = () => {
   const [cookies, setCookie] = useCookies(["store"]);
   const [isLoading, setIsLoading] = useState(false);
 
-
-
   // Use the useMutation hook
   const loginMutation = useMutation(
     storeSignIn,
@@ -96,31 +94,6 @@ const Login = () => {
     const formData = new FormData(event.target);
     loginMutation.mutate({ email: formData.get('email'), password: formData.get('password') });
   };
-
-  // const forwardtohome = () => {
-  //   if (mail !== DemoData.mail || password !== DemoData.password) {
-  //     return Swal.fire({
-  //       icon: "error",
-  //       title: "Mail and Password is Incorrect",
-  //       timer: "2000",
-  //       confirmButtonText: "Ok",
-  //       confirmButtonColor: "#33996a",
-
-  //       showClass: {
-  //         popup: "swal2-show",
-  //         backdrop: "swal2-backdrop-show",
-  //         icon: "swal2-icon-show",
-  //       },
-  //       hideClass: {
-  //         popup: "swal2-hide",
-  //         backdrop: "swal2-backdrop-hide",
-  //         icon: "swal2-icon-hide",
-  //       },
-  //     });
-  //   } else {
-  //     return navigate("/");
-  //   }
-  // };
 
   const Toast = Swal.mixin({
     toast: true,
