@@ -44,8 +44,6 @@ const Addnew = () => {
   const { isError: isError3, isSuccess: isSuccess3, data: data3, refetch: refetch3 } = useQuery(['unit', { cookies }], () => getUnits(cookies))
   const { isError: isError4, isSuccess: isSuccess4, data: data4, refetch: refetch4 } = useQuery(['attribute', { cookies }], () => getAttributes(cookies))
 
-  console.log(data3)
-
   // Use the useMutation hook
   // const productMutation = useMutation(
   //   addNewItem,

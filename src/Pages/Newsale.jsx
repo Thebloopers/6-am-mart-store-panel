@@ -1,13 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import withAuth from "../HOC/withAuth";
 import CustomDropdown from "../Components/CustomDropdown";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { useQuery } from "react-query";
+import { getAllCategories, getAllSubCategories } from "../helpers/categories";
+import { getAllProductsOfStore } from "../helpers/products";
+import { FaShoppingCart } from "react-icons/fa";
+import CustomDropdown1 from "../Components/CustomDropdown1";
 
 function Newsale() {
-  const foodItems = [
-    { name: "Food 1", qty: 2, unitPrice: 10 },
-    { name: "Food 2", qty: 1, unitPrice: 15 },
-    { name: "Food 3", qty: 3, unitPrice: 8 },
-  ];
+  const [counter, setCounter] = useState(1);
+
+  const incrementCounter = () => {
+    setCounter(counter + 1);
+  };
+
+  const decrementCounter = () => {
+    if (counter !== 1) {
+      setCounter(counter - 1);
+    }
+  };
+
+  // const foodItems = [
+  //   { name: "Food 1", qty: 2, unitPrice: 10 },
+  //   { name: "Food 2", qty: 1, unitPrice: 15 },
+  //   { name: "Food 3", qty: 3, unitPrice: 8 },
+  // ];
+
+  const [cart, setCart] = useState([]);
+
+  const [customer, setCustomer] = useState(null);
+
+  const onCustomerSelect = (selected) => {
+    setCustomer(selected);
+  };
+
+  const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(["store"]);
+
+  const [categoryId, setCategoryId] = useState(null);
+
+  const {
+    isError: isError1,
+    isSuccess: isSuccess1,
+    data: data1,
+    refetch: refetch1,
+  } = useQuery(["categories", { cookies }], () => getAllCategories(cookies));
+
+  const {
+    isLoading: isLoading2,
+    isError: isError2,
+    isSuccess: isSuccess2,
+    data: data2,
+    refetch: refetch2,
+  } = useQuery(["products", { cookies }], () =>
+    getAllProductsOfStore(cookies, categoryId)
+  );
+
+  // useEffect hook to refetch data when categoryId changes
+  useEffect(() => {
+    refetch2();
+  }, [categoryId]); // rerun effect when categoryId changes
+
   const foods = [
     {
       name: "Medu Vada",
@@ -66,9 +121,21 @@ function Newsale() {
   ];
   const [modal, setModal] = useState(false);
 
+  function openModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) modal.showModal();
+  }
+
+  function closeModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) modal.close();
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <dialog id="my_modal_1" className="modal modal-top w-1/2 m-auto">
+      {/* add new customer modal  */}
+
+      <dialog id="add_customer_modal" className="modal modal-top w-1/2 m-auto">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Add new customer</h3>
 
@@ -124,7 +191,6 @@ function Newsale() {
               method="dialog"
               className="flex justify-end items-center gap-x-4"
             >
-              {/* if there is a button in form, it will close the modal */}
               <button className="btn">Close</button>
               <button className="btn">Reset</button>
               <button className="btn btn-info text-white">Submit</button>
@@ -137,22 +203,32 @@ function Newsale() {
         <h2 className="text-xl font-semibold mb-4">Product Selection</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="col-span-full sm:col-span-1">
-            <select
-              name="store_id"
-              id="store_select"
-              className="form-select border-2 h-12 w-full rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-            ></select>
+            <label className="input input-bordered flex items-center gap-2">
+              <input type="text" className="grow" placeholder="Search" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="w-4 h-4 opacity-70"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </label>
           </div>
           <div className="col-span-full sm:col-span-1">
             <select
-              name="category"
-              id="category"
-              className="form-select border-2 h-12 w-full rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-              disabled
+              className="select w-full max-w-xs border-gray-300"
+              onChange={(event) => {
+                return setCategoryId(event.target.value);
+              }}
             >
-              <option value="" selected>
-                All categories
-              </option>
+              {data1?.category?.map((item) => (
+                <option value={item._id}>{item?.name}</option>
+              ))}
             </select>
           </div>
           <div className="col-span-full">
@@ -167,60 +243,178 @@ function Newsale() {
                   placeholder="Search by product name"
                   disabled
                 />
+                <div className="flex justify-start flex-wrap items-center gap-x-6 mt-4 cursor-pointer">
+                  {isLoading2 ? (
+                    <span className="loading loading-spinner loading-lg text-center text-5xl text-gray-400 ml-[50%] mt-[40%]"></span>
+                  ) : data2?.data?.length === 0 ? (
+                    <div>No Products Found Under This Category</div>
+                  ) : (
+                    data2?.data?.map((item, index) => {
+                      const modalId = `my_modal_${index}`; // Unique modal id for each item
+                      return (
+                        <div className="text-center m-2" key={index}>
+                          <button
+                            type="button"
+                            onClick={() => openModal(modalId)}
+                          >
+                            <img
+                              src={`${import.meta.env.VITE_IMAGE_URL}/${
+                                item.itemThumbnail[0]
+                              }`}
+                              alt=""
+                              className="rounded-t-lg w-[150px] h-[130px]"
+                            />
+                            <h1 className=" text-gray-700 text-lg">
+                              {item.name}
+                            </h1>
+                            <h1 className="text-orange-500 text-xl">
+                              ₹ {item.price}.00
+                            </h1>
+                          </button>
+                          <dialog id={modalId} className="modal">
+                            <div className="modal-box">
+                              <form method="dialog">
+                                {/* if there is a button in form, it will close the modal */}
+                                <button
+                                  className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                                  onClick={() => closeModal(modalId)}
+                                  type="button"
+                                >
+                                  ✕
+                                </button>
+                              </form>
+                              <div className="font-bold text-lg flex justify-start items-center gap-x-8">
+                                <img
+                                  src={`${import.meta.env.VITE_IMAGE_URL}/${
+                                    item.itemThumbnail[0]
+                                  }`}
+                                  alt=""
+                                  className="w-[150px] border border-gray-300 rounded-lg  object-cover"
+                                />
+                                <div>
+                                  <h1 className="text-xl font-semibold text-start ">
+                                    {item.name}
+                                  </h1>
+                                  <div className="flex justify-start items-center gap-3 ">
+                                    <p className="text-lg text-gray-500 text font-light">
+                                      Price :
+                                    </p>
+                                    <p className="text-xl font-normal my-2">
+                                      {" "}
+                                      {item?.discounttype == "Amount"
+                                        ? (
+                                            item?.price - item?.discount
+                                          ).toFixed(2)
+                                        : (
+                                            item?.price -
+                                            (item?.discount / 100) * item?.price
+                                          ).toFixed(2)}{" "}
+                                      <del className="text-sm text-gray-500 font-light mx-2">
+                                        ₹{item?.price}
+                                      </del>
+                                    </p>
+                                  </div>
+                                  <div className="flex justify-start items-center gap-3">
+                                    <p className="text-lg text-gray-500 text font-light">
+                                      Discount :
+                                    </p>
+                                    <p className="text-xl font-normal">
+                                      ₹
+                                      {item?.discounttype == "Amount"
+                                        ? item?.discount
+                                        : (item?.discount / 100) * item?.price}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
 
-                <dialog id="my_modal_3" className="modal">
-                  <div className="modal-box">
-                    <form method="dialog">
-                      {/* if there is a button in form, it will close the modal */}
-                      <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                        ✕
-                      </button>
-                    </form>
-                    <div className="font-bold text-lg flex justify-start items-center gap-x-3">
-                      <img
-                        src="https://6ammart-admin.6amtech.com/storage/app/public/product/2021-08-21-6120e7a4b7b2a.png"
-                        alt=""
-                        className="w-[150px]"
-                      />
-                      <div>
-                        <h1 className="text-xl font-bold">Medu Vada</h1>
-                        <p className="text-xl"> ₹95</p>
-                      </div>
-                    </div>
-                    <div className="py-4">
-                      <h1 className="text-2xl font-bold text-gray-700">
-                        Description
-                      </h1>
-                      <p className="text-gray-400">
-                        Menu Vada is crispy, fluffy, soft, and delicious lentil
-                        fritters from South Indian cuisine.
-                      </p>
-                    </div>
-                  </div>
-                </dialog>
-                <div
-                  className="flex justify-start flex-wrap items-center  gap-x-6 mt-4 cursor-pointer"
-                  onClick={() =>
-                    document.getElementById("my_modal_3").showModal()
-                  }
-                >
-                  {foods.map((item) => {
-                    return (
-                      <div className="text-center m-2">
-                        <img
-                          src={item.image}
-                          alt=""
-                          className="rounded-t-lg w-[150px] h-[130px]"
-                        />
-                        <h1 className="font-medium text-gray-800 text-xl">
-                          {item.name}
-                        </h1>
-                        <h1 className="text-orange-500 text-xl">
-                          ₹ {item.price}.00
-                        </h1>
-                      </div>
-                    );
-                  })}
+                              <div className="py-4 text-start">
+                                <h1 className="text-xl  text-gray-700">
+                                  Description
+                                </h1>
+                                <p className="text-gray-400 font-thin text-sm">
+                                  {/* {item.shortDescription} */} A paragraph is
+                                  defined as “a group of sentences or a single
+                                  sentence that forms a unit” (Lunsford and
+                                  Connors 116). Length and appearance do not
+                                  determine whether a section in a paper is a
+                                  paragraph. For instance, in some styles of
+                                  writing, particularly journalistic styles, a
+                                  paragraph can be just one sentence long.
+                                </p>
+                              </div>
+
+                              <div className="flex justify-between items-center">
+                                <h1 className="text-lg  text-gray-700">
+                                  Quantity
+                                </h1>
+                                <div className="flex justify-end items-center gap-3">
+                                  <span
+                                    className="text-gray-500 text-5xl"
+                                    onClick={decrementCounter}
+                                  >
+                                    -
+                                  </span>
+                                  <div className="border border-gray-400 h-[40px] w-[70px] rounded-lg">
+                                    <h1
+                                      className="text-center mt-2"
+                                      defaultValue={1}
+                                    >
+                                      {counter}
+                                    </h1>
+                                  </div>
+                                  <span
+                                    className="text-gray-500 text-3xl"
+                                    onClick={incrementCounter}
+                                  >
+                                    +
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div className="flex justify-start items-center gap-x-3">
+                                <p className="text-gray-400 font-normal">
+                                  Total Price :{" "}
+                                </p>
+                                <h1 className="font-semibold">
+                                  ₹{" "}
+                                  {item?.discounttype == "Amount"
+                                    ? (item?.price - item?.discount).toFixed(2)
+                                    : (
+                                        item?.price -
+                                        (item?.discount / 100) * item?.price
+                                      ).toFixed(2)}
+                                </h1>
+                              </div>
+
+                              <button
+                                type="button"
+                                className=" btn btn-info text-white font-bold my-5"
+                                onClick={() => {
+                                  // Check if the item is already in the cart
+                                  const itemAlreadyInCart = cart.some(
+                                    (cartItem) => cartItem.item._id === item._id
+                                  );
+
+                                  // If the item is not already in the cart, add it
+                                  if (!itemAlreadyInCart) {
+                                    setCart([
+                                      ...cart,
+                                      { item: item, qty: counter },
+                                    ]);
+                                  }
+                                  closeModal(modalId);
+                                }}
+                              >
+                                <FaShoppingCart />
+                                Add to Cart
+                              </button>
+                            </div>
+                          </dialog>
+                        </div>
+                      );
+                    })
+                  )}
                 </div>
               </div>
             </form>
@@ -232,19 +426,25 @@ function Newsale() {
         <form>
           <div className="flex flex-col md:flex-row items-center justify-between p-3 rounded-lg">
             <div className="relative flex-1 w-full md:mx-2 mb-2 md:mb-0">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                
-              </span>
-              
+              <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
 
-              <label className="form-control w-full max-w-[300px]">
-                
-                <CustomDropdown
-                  
-                />
+              <label className="form-control w-full max-w-[300px] border border-gray-300 rounded-lg">
+                {/* <CustomDropdown1
+                options={data2 ? data2?.category?.map((item) => { return item }) : []}
+                onSelect={onCustomerSelect}
+                dropdown={"customer"}
+                category={customer}
+                /> */}
+
+<select className="select w-full max-w-xs">
+  <option disabled selected>Select Customer</option>
+  <option>Homer</option>
+  <option>Marge</option>
+  <option>Bart</option>
+  <option>Lisa</option>
+  <option>Maggie</option>
+</select>
               </label>
-
-
             </div>
 
             <button
@@ -252,7 +452,9 @@ function Newsale() {
               id="add_new_customer"
               type="button"
               // onClick={() => setModal(!modal)}
-              onClick={() => document.getElementById("my_modal_1").showModal()}
+              onClick={() =>
+                document.getElementById("add_customer_modal").showModal()
+              }
             >
               Add new customer
             </button>
@@ -285,67 +487,104 @@ function Newsale() {
         <div id="cart-items" className="mt-6"></div>
         <div id="cart" className="w-full">
           <div className="flex flex-row overflow-x-auto px-2 cart-table-scroll">
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[400px] bg-gray-100 table-fixed">
-                <thead className="bg-gray-200 text-gray-700">
-                  <tr className="text-center">
-                    <th className="py-3 px-4 border-b-2 border-gray-300">
-                      Food
-                    </th>
-                    <th className="py-3 px-4 border-b-2 border-gray-300">
-                      QTY
-                    </th>
-                    <th className="py-3 px-4 border-b-2 border-gray-300">
-                      Unit Price
-                    </th>
-                    <th className="py-3 px-4 border-b-2 border-gray-300">
-                      Delete
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white text-center">
-                  {foodItems.map((item, index) => (
-                    <tr
-                      key={index}
-                      className="border-b border-gray-200 hover:bg-gray-50"
-                    >
-                      <td className="py-2 px-4">{item.name}</td>
-                      <td className="py-2 px-4">{item.qty}</td>
-                      <td className="py-2 px-4">
-                        ${item.unitPrice.toFixed(2)}
-                      </td>
-                      <td className="py-2 px-4">
-                        <button className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">
-                          Delete
-                        </button>
-                      </td>
+            <div
+              className="flex flex-row overflow-x-auto px-2 cart-table-scroll"
+              style={{ maxHeight: "400px" }}
+            >
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[400px] bg-gray-100 table-fixed">
+                  <thead className="bg-gray-200 text-gray-700">
+                    <tr className="text-center">
+                      <th className="py-3 px-4 border-b-2 border-gray-300">
+                        Item
+                      </th>
+                      <th className="py-3 px-4 border-b-2 border-gray-300">
+                        Qty
+                      </th>
+                      <th className="py-3 px-4 border-b-2 border-gray-300">
+                        Unit Price
+                      </th>
+                      <th className="py-3 px-4 border-b-2 border-gray-300">
+                        Delete
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="bg-white text-center w-full">
+                    {cart.length > 0 &&
+                      cart.map((item, index) => (
+                        <tr
+                          key={index}
+                          className="border-b border-gray-200 hover:bg-gray-50 w-full"
+                        >
+                          <td className="py-2 px-4 flex flex-col justify-center items-center gap-y-3 w-full">
+                            <img
+                              src={`${import.meta.env.VITE_IMAGE_URL}/${
+                                item?.item?.itemThumbnail[0]
+                              }`}
+                              className="w-16 rounded-lg"
+                            />
+                            <h1 className="w-full text-sm">
+                              {item?.item?.name}
+                            </h1>
+                          </td>
+
+                          <td className="py-2 px-4">{item?.qty}</td>
+                          <td className="py-2 px-4">
+                            ₹
+                            {item?.item?.discounttype == "Amount"
+                              ? (
+                                  item?.item?.price - item?.item?.discount
+                                ).toFixed(2)
+                              : (
+                                  item?.item?.price -
+                                  (item?.item?.discount / 100) *
+                                    item?.item?.price
+                                ).toFixed(2)}
+                          </td>
+                          <td className="py-2 px-4">
+                            <button
+                              className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
+                              type="button"
+                              onClick={() =>
+                                setCart(
+                                  cart.filter(
+                                    (doc) => doc?.item?._id !== item?.item?._id
+                                  )
+                                )
+                              }
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
           <div className="box p-3">
-            <div className="grid grid-cols-1 md:grid-cols-2 text-dark">
-              <div className="col-span-1 md:col-span-2">
-                <div className="text-sm border-b pb-2">
-                  Subtotal (TAX Included):
-                  <div className="text-sm text-right">$ 0.00</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 text-dark my-5">
+              <div className="col-span-1 md:col-span-2 flex flex-col">
+                <div className="text-sm border-b pb-2 flex justify-between p-2">
+                  <span>Subtotal (TAX Included):</span>
+                  <span className="text-right">₹ 0.00</span>
                 </div>
-                <div className="text-sm border-b pb-2">
-                  Discount :<div className="text-sm text-right">- $ 0.00</div>
+                <div className="text-sm border-b pb-2 flex justify-between p-2">
+                  <span>Discount :</span>
+                  <span className="text-right">- ₹ 0.00</span>
                 </div>
-                <div className="text-sm border-b pb-2">
-                  Delivery fee :
-                  <div className="text-sm text-right" id="delivery_price">
+                <div className="text-sm border-b pb-2 flex justify-between p-2">
+                  <span>Delivery fee :</span>
+                  <span className="text-right" id="delivery_price">
+                    ₹ 0.00
+                  </span>
+                </div>
+                <div className="text-sm border-b pb-2 flex justify-between p-2">
+                  <span>Total :</span>
+                  <span className="text-right" id="delivery_price">
                     $ 0.00
-                  </div>
-                </div>
-                <div className="text-sm border-b pb-2">
-                  Total :
-                  <div className="text-sm text-right" id="delivery_price">
-                    $ 0.00
-                  </div>
+                  </span>
                 </div>
               </div>
               <div className="col-span-1 md:col-span-1"></div>
