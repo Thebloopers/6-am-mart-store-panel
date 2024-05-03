@@ -32,7 +32,7 @@ function Banners() {
   ]);
   return (
     <>
-      <div className="py-6 px-4">
+      <div className="py-6 px-4 w-[350px] md:w-auto">
         <h1 className="page-header-title flex items-center">
           <span className="page-header-icon mr-2">
             <img
@@ -275,7 +275,7 @@ function Banners() {
               </button>
             </form>
           </div>
-          <div className="max-w-[375px] overflow-auto md:max-w-full">
+          <div className="overflow-x-auto max-w-[350px] md:max-w-full">
             <table className="table-auto w-full">
               <thead className="bg-gray-200 text-gray-700">
                 <tr>

@@ -31,7 +31,7 @@ const Addons = () => {
     // },
   ]);
   return (
-    <div>
+    <div className="w-[360px] md:w-auto ">
       <h1 className="page-header-title capitalize m-0 flex text-2xl gap-3 font-extrabold">
         <span className="page-header-icon">
           <img
@@ -75,7 +75,7 @@ const Addons = () => {
 
         <div className="col-span-12 lg:col-span-12 mb-6 lg:mb-4 mt-8 rounded-md shadow-lg">
           <div className="card shadow-lg p-2">
-            <div className="card-header py-3 border-b-0 flex justify-between items-center">
+            <div className="card-header py-3 border-b-0 flex flex-col md:flex-row justify-between items-center">
               <h5 className="text-lg font-semibold text-gray-800">
                 Banner List
                 <span className="badge badge-primary ml-2">{data.length}</span>

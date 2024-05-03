@@ -71,7 +71,7 @@ const PendingItemList = () => {
     },
   ]);
   return (
-    <div>
+    <div className="w-[350px] md:w-auto">
       <div className="flex justify-start items-center gap-x-3">
         <IoFilterSharp className="text-2xl text-gray-800 font-bold" />
         <h1 className="text-2xl text-gray-800 font-bold">Item List</h1>
@@ -87,6 +87,7 @@ const PendingItemList = () => {
             />
           </div>
         </div>
+        <div className="overflow-x-auto max-w-[350px] md:max-w-full">
 
         <table className="table-auto min-w-full border-collapse border border-gray-200">
           <thead className="bg-gray-100">
@@ -139,6 +140,7 @@ const PendingItemList = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );
