@@ -15,87 +15,89 @@ const Login = () => {
 
   const [password, setPassword] = useState("");
   const [mail, setMail] = useState("");
-  
-  console.log(mail)
+
   const [show, setShow] = useState("false");
   const [cookies, setCookie] = useCookies(["store"]);
   const [isLoading, setIsLoading] = useState(false);
 
   // Use the useMutation hook
-  const loginMutation = useMutation(
-    storeSignIn,
-    {
-      onMutate: () => {
-        setIsLoading(true); // Set loading to true when mutation starts
-      },
+  const loginMutation = useMutation(storeSignIn, {
+    onMutate: () => {
+      setIsLoading(true); // Set loading to true when mutation starts
+    },
 
-      onSuccess: (data) => {
-        setIsLoading(false);
-        if (data.success === true) {
-          return authenticate(data, () => {
+    onSuccess: (data) => {
+      setIsLoading(false);
+      if (data.success === true) {
+        return authenticate(
+          data,
+          () => {
             navigate("/");
-          }, setCookie);
-        }
-        if (data.success === false) {
-          console.log(data)
-          return Swal.fire({
-            icon: "error",
-            title: data?.error || data?.errors || "something went wrong",
-            timer: "2000",
-            confirmButtonText: "Ok",
-            confirmButtonColor: "#33996a",
-
-            showClass: {
-              popup: "swal2-show",
-              backdrop: "swal2-backdrop-show",
-              icon: "swal2-icon-show",
-            },
-            hideClass: {
-              popup: "swal2-hide",
-              backdrop: "swal2-backdrop-hide",
-              icon: "swal2-icon-hide",
-            },
-          });
-        } else {
-          return Swal.fire({
-            icon: "error",
-            title: "something went wrong",
-            timer: "2000",
-            confirmButtonText: "Ok",
-            confirmButtonColor: "#33996a",
-
-            showClass: {
-              popup: "swal2-show",
-              backdrop: "swal2-backdrop-show",
-              icon: "swal2-icon-show",
-            },
-            hideClass: {
-              popup: "swal2-hide",
-              backdrop: "swal2-backdrop-hide",
-              icon: "swal2-icon-hide",
-            },
-          });
-        }
-      },
-      onError: (error) => {
-        setIsLoading(false); // Set loading to false when there's an error
-        Swal.fire({
+          },
+          setCookie
+        );
+      }
+      if (data.success === false) {
+        console.log(data);
+        return Swal.fire({
           icon: "error",
-          title: "Something went wrong",
+          title: data?.error || data?.errors || "something went wrong",
           timer: "2000",
           confirmButtonText: "Ok",
           confirmButtonColor: "#33996a",
-          // ... other Swal options
-        });
-      },
 
-    }
-  );
+          showClass: {
+            popup: "swal2-show",
+            backdrop: "swal2-backdrop-show",
+            icon: "swal2-icon-show",
+          },
+          hideClass: {
+            popup: "swal2-hide",
+            backdrop: "swal2-backdrop-hide",
+            icon: "swal2-icon-hide",
+          },
+        });
+      } else {
+        return Swal.fire({
+          icon: "error",
+          title: "something went wrong",
+          timer: "2000",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#33996a",
+
+          showClass: {
+            popup: "swal2-show",
+            backdrop: "swal2-backdrop-show",
+            icon: "swal2-icon-show",
+          },
+          hideClass: {
+            popup: "swal2-hide",
+            backdrop: "swal2-backdrop-hide",
+            icon: "swal2-icon-hide",
+          },
+        });
+      }
+    },
+    onError: (error) => {
+      setIsLoading(false); // Set loading to false when there's an error
+      Swal.fire({
+        icon: "error",
+        title: "Something went wrong",
+        timer: "2000",
+        confirmButtonText: "Ok",
+        confirmButtonColor: "#33996a",
+        // ... other Swal options
+      });
+    },
+  });
   //handle login
   const handleLogin = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    loginMutation.mutate({ email: formData.get('email'), password: formData.get('password') });
+    loginMutation.mutate({
+      email: mail != "" ? mail : formData.get("email"),
+      password: password != "" ? password : formData.get("password"),
+    });
   };
 
   const Toast = Swal.mixin({
@@ -202,20 +204,16 @@ const Login = () => {
                   Forget Password?
                 </Link>
               </div>
-              <button disabled={isLoading}
-
+              <button
+                disabled={isLoading}
                 type="submit"
                 className="btn btn-success w-[300px] md:w-[440px] text-white md:mr-14 "
               >
-
                 {isLoading ? (
                   <span className="loading loading-dots loading-md"></span>
-
                 ) : (
-                  'Login'
+                  "Login"
                 )}
-
-
               </button>
             </div>
           </form>
@@ -230,16 +228,16 @@ const Login = () => {
                 className="btn btn-success"
                 onClick={() => {
                   return (() => {
-                    setMail(DemoData.mail);
-                    setPassword(DemoData.password);
-                    Toast.fire({
-                      icon: "success",
-                      title: "successfully copied",
-                      position: "bottom-left",
-                      background: "#038D4C",
-                      color: "#fff",
-                      timer: "1000",
-                    });
+                    setMail(DemoData.mail),
+                      setPassword(DemoData.password),
+                      Toast.fire({
+                        icon: "success",
+                        title: "successfully copied",
+                        position: "bottom-left",
+                        background: "#038D4C",
+                        color: "#fff",
+                        timer: "1000",
+                      });
                     document.getElementById("mail").disabled = true;
                     document.getElementById("password").disabled = true;
                   })();
