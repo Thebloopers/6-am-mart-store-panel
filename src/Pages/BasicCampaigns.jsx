@@ -21,10 +21,10 @@ function BasicCampaigns() {
   ];
   return (
     <>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 w-[350px] md:w-auto">
         <div className="bg-white shadow-md rounded-lg">
           <div className="px-6 py-4">
-            <div className="flex justify-between items-center">
+            <div className="flex md:flex-row flex-col gap-5 justify-between items-center">
               <div className="flex items-center">
                 <img
                   src="https://6ammart-admin.6amtech.com/public/assets/admin/img/campaign.png"
@@ -44,7 +44,7 @@ function BasicCampaigns() {
               </Link>
             </div>
             <hr className="my-4" />
-            <div className="flex items-center mb-4">
+            <div className="flex md:flex-row flex-col items-center mb-4">
               <h2 className="text-lg font-semibold text-gray-800 mr-4">
                 Campaign list
               </h2>

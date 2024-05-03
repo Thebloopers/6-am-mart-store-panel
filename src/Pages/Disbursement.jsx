@@ -16,11 +16,11 @@ const Disbursement = () => {
                     </div>
                 </div >
                 <div className='flex flex-col shadow-lg'>
-                    <div className='flex items-center justify-between px-5 py-5 gap-1 text-[2.2vh] font-semibold'>
+                    <div className='flex items-center md:flex-row flex-col justify-between px-5 py-5 gap-5 text-[2.2vh] font-semibold'>
                         <div>
                         <h1>Disbursement Methods</h1>
                         </div>
-                        <div className='flex gap-1'>
+                        <div className='flex md:flex-row flex-col gap-5'>
                             <div className='flex items-center'>
                             <input placeholder='Ex: Search by name' className='bg-white border-[1px] h-8 font-normal p-3' type="text" />
                             <button className='p-2 h-8 bg-gray-400'><IoMdSearch fill='white' /></button>

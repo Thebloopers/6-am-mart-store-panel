@@ -146,7 +146,7 @@ const List = () => {
   };
 
   return (
-    <div>
+    <div className="w-auto ">
       <div className="flex justify-start items-center gap-x-3">
         <IoFilterSharp className="text-2xl text-gray-800 font-bold" />
         <h1 className="text-2xl text-gray-800 font-bold">Item List</h1>
@@ -205,6 +205,8 @@ const List = () => {
           </div>
           <button onClick={() => navigate("/addnew")} className="btn btn-info text-white">Add New Item</button>
         </div>
+        <div className="overflow-x-auto max-w-[350px] md:max-w-full">
+
         <table className="table-auto min-w-full border-collapse border border-gray-200">
           <thead className="bg-gray-100">
             <tr>
@@ -284,6 +286,7 @@ const List = () => {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

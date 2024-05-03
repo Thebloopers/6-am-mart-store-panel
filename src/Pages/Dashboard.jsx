@@ -11,6 +11,13 @@ import { Link } from "react-router-dom";
 import TopRatedItems from "../Components/TopRatedItems";
 import TopDeliveryman from "../Components/TopDeliveryman";
 import withAuth from "../HOC/withAuth";
+import Rating from 'react-rating';
+import ratingGrey from "../assets/star-grey.png";
+import ratingYellow from "../assets/star-yellow.png";
+import { IoIosStar } from "react-icons/io";
+import { MdOutlineBarChart } from "react-icons/md";
+
+
 // import { GoDotFill } from "react-icons/go";
 const Dashboard = () => {
   const gridItems = [
@@ -21,6 +28,7 @@ const Dashboard = () => {
       alt: "Suruchi Premium Green Chili Pickle image",
       title: "Suruchi Premium Green Chili Pickle",
       sold: 2,
+      rating:"4"
     },
     {
       href: "",
@@ -29,6 +37,7 @@ const Dashboard = () => {
       alt: "Suruchi Premium Green Chili Pickle image",
       title: "Suruchi Premium Green Chili Pickle",
       sold: 2,
+      rating:"4"
     },
     {
       href: "",
@@ -37,21 +46,22 @@ const Dashboard = () => {
       alt: "Suruchi Premium Green Chili Pickle image",
       title: "Suruchi Premium Green Chili Pickle",
       sold: 2,
+      rating:"4"
     },
   ];
 
   const stores = [
     {
       imageUrl:
-        "https://6ammart-admin.6amtech.com/storage/app/public/store/2022-03-22-6239604ade310.png",
-      title: "Online Market",
+        "https://6ammart-admin.6amtech.com/storage/app/public/product/2022-03-22-6239a7117c441.png",
+      title: "Green Chilli",
       orderCount: 3,
       storeUrl: "",
     },
     {
       imageUrl:
-        "https://6ammart-admin.6amtech.com/storage/app/public/store/2022-03-22-623961d98ca1e.png",
-      title: "Smart Shopping",
+        "https://6ammart-admin.6amtech.com/storage/app/public/product/2022-03-22-6239a7117c441.png",
+      title: "Green Chilli",
       orderCount: 10,
       storeUrl: "",
     },
@@ -127,8 +137,13 @@ const Dashboard = () => {
     // Add more card data objects as needed
   ];
 
+  const SVGIcon = (props) =>
+    <svg className={props.className} pointerEvents="none">
+      <use xlinkHref={props.href} />
+    </svg>;
+
   return (
-    <div>
+    <div className="w-auto">
       <div className="flex justify-between items-center ">
         <div className="text-2xl text-gray-800 flex justify-start gap-3 items-center">
           <MdDashboardCustomize />
@@ -141,9 +156,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="p-8 my-6 shadow-lg rounded-lg">
-        <div className="flex justify-between items-center ">
-          <div className="text-xl text-gray-800 flex justify-start gap-1 items-center">
+      <div className="p-8 my-6 shadow-lg rounded-lg w-full">
+        <div className="flex md:justify-between md:items-center flex-col md:flex-row justify-start gap-y-3 ">
+          <div className="text-xl text-gray-800 flex  justify-start gap-1 items-start">
             <IoStatsChart />
             <h1 className="font-semibold text-lg text-gray-700">
               Dashboard order statistics
@@ -159,8 +174,8 @@ const Dashboard = () => {
           </select>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 m-auto p-4 ">
-          <div className="flex justify-around items-center bg-blue-100 rounded-lg p-6 py-12 m-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 m-auto md:p-4 py-4 w-full  ">
+          <div className="flex justify-around items-center bg-blue-100 rounded-lg p-6 md:py-12 py-8 m-2 w-full">
             <div>
               <h1 className="font-semibold text-xl text-blue-500">4</h1>
               <p className="font-medium">Confirmed</p>
@@ -172,7 +187,7 @@ const Dashboard = () => {
             />
           </div>
 
-          <div className="flex justify-around items-center bg-[#FFF7E7] rounded-lg p-8 py-12 m-2">
+          <div className="flex justify-around items-center bg-[#FFF7E7] rounded-lg p-8  md:py-12 py-8 m-2 w-full">
             <div>
               <h1 className="font-semibold text-xl text-yellow-400">0</h1>
               <p className="font-medium">Cooking</p>
@@ -184,7 +199,7 @@ const Dashboard = () => {
             />
           </div>
 
-          <div className="flex justify-around items-center bg-[#EAFDF6] rounded-lg p-8 py-12 m-2">
+          <div className="flex justify-around items-center bg-[#EAFDF6] rounded-lg p-8  md:py-12 py-8 w-full m-2">
             <div>
               <h1 className="font-semibold text-xl text-green-400">1</h1>
               <p className="font-medium">Ready for dellivery</p>
@@ -196,7 +211,7 @@ const Dashboard = () => {
             />
           </div>
 
-          <div className="flex justify-around items-center bg-[#FFF2F2] rounded-lg p-8 py-12 m-2 ">
+          <div className="flex justify-around items-center bg-[#FFF2F2] rounded-lg p-8 md:py-12 py-8 w-full m-2 ">
             <div>
               <h1 className="font-semibold text-xl text-red-400">1</h1>
               <p className="font-medium">Ready for dellivery</p>
@@ -209,8 +224,8 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 m-auto p-4">
-          <div className="flex justify-around items-center bg-[#F8F9FB] rounded-lg   p-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 m-auto md:p-4  w-full">
+          <div className="flex justify-around items-center bg-[#F8F9FB] rounded-lg   p-3 w-full">
             <div className="flex justify-start gap-2 items-center">
               <img
                 src="https://6ammart-admin.6amtech.com/public/assets/admin/img/dashboard/statistics/1.png"
@@ -223,7 +238,7 @@ const Dashboard = () => {
             <h1 className="font-semibold text-xl text-blue-500">4</h1>
           </div>
 
-          <div className="flex justify-around items-center bg-[#F8F9FB] rounded-lg  ">
+          <div className="flex justify-around items-center bg-[#F8F9FB] rounded-lg p-3 ">
             <div className="flex justify-start gap-2 items-center">
               <img
                 src="https://6ammart-admin.6amtech.com/public/assets/admin/img/dashboard/statistics/2.png"
@@ -236,7 +251,7 @@ const Dashboard = () => {
             <h1 className="font-semibold text-xl text-blue-500">0</h1>
           </div>
 
-          <div className="flex justify-around items-center bg-[#F8F9FB] rounded-lg  ">
+          <div className="flex justify-around items-center bg-[#F8F9FB] rounded-lg  p-3">
             <div className="flex justify-start gap-2 items-center">
               <img
                 src="https://6ammart-admin.6amtech.com/public/assets/admin/img/dashboard/statistics/3.png"
@@ -249,7 +264,7 @@ const Dashboard = () => {
             <h1 className="font-semibold text-xl text-blue-500">5</h1>
           </div>
 
-          <div className="flex justify-around items-center bg-[#F8F9FB] rounded-lg ">
+          <div className="flex justify-around items-center bg-[#F8F9FB] rounded-lg p-3 ">
             <div className="flex justify-start gap-2 items-center">
               <img
                 src="https://6ammart-admin.6amtech.com/public/assets/admin/img/dashboard/statistics/4.png"
@@ -263,8 +278,8 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="flex justify-between items-start my-5 gap-x-3">
-          <div className="w-[70%] shadow-lg rounded-lg">
+        <div className="flex flex-col md:flex-row justify-between items-start my-5 gap-x-3 w-full gap-y-5">
+          <div className=" w-screen overflow-x-auto p-4 md:w-[70%] shadow-lg rounded-lg">
             <div className="flex justify-around items-center mt-3">
               <div>
                 <h1 className="text-gray-700 text-xl ">$ 858.40</h1>
@@ -272,7 +287,7 @@ const Dashboard = () => {
               </div>
 
               <h1>
-                <GoDotFill className="text-xl text-[#00AA96] inline-block mx-2" />
+                <GoDotFill className="text-xl w-full text-[#00AA96] inline-block mx-2" />
                 Sale (2024)
               </h1>
 
@@ -288,7 +303,7 @@ const Dashboard = () => {
             <Chart />
           </div>
 
-          <div className="shadow-lg rounded-lg flex flex-col justify-center items-start w-1/3">
+          <div className="shadow-lg rounded-lg flex flex-col  justify-center items-start w-full  md:w-1/3">
             <div className="flex justify-between items-center mt-4 px-3 w-full">
               <h1 className="text-gray-600 font-bold">User Statistics</h1>
               <select className="select w-full max-w-[200px] focus:outline-none border border-gray-300">
@@ -301,7 +316,7 @@ const Dashboard = () => {
               </select>
             </div>
             <PiChart />
-            <div className="flex justify-evenly items-center mb-5">
+            <div className="flex justify-evenly items-center mb-5 gap-x-5">
               <h1>
                 {" "}
                 <GoDotFill className="inline-block text-2xl text-[#005555]" />{" "}
@@ -321,22 +336,23 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5">
           <div className="col-span-1 md:col-span-2 lg:col-span-1 my-4">
             <div className="bg-white shadow-md rounded-lg overflow-hidden">
               <div className="px-4 py-3">
                 <div className="flex justify-between items-center mb-2">
-                  <h5 className="text-lg font-semibold text-gray-800">
-                    Top Selling Stores
-                  </h5>
+                  <div className="flex justify-start items-center gap-x-3 text-lg  text-gray-700 my-5">
+                  <MdOutlineBarChart />
+                    <h1>Top Selling Item</h1>
+                  </div>
                   <a
-                    href="https://6ammart-admin.6amtech.com/admin/store/list"
+                    // href="https://6ammart-admin.6amtech.com/admin/store/list"
                     className="text-blue-600 text-sm font-medium"
                   >
                     View all
                   </a>
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-5 my-3">
                   {stores.map((store, index) => (
                     <StoreCard
                       key={index} // It's important to provide a unique key for each iterated element
@@ -351,11 +367,11 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="col-lg-4 col-md-6">
+          {/* <div className="col-lg-4 col-md-6">
             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
               <div className="px-4 py-3 border-b border-gray-200">
                 <h5 className="text-lg font-semibold text-gray-800">
-                  Most Rated Stores
+                Top Selling Item
                 </h5>
               </div>
               <div className="px-4 py-3">
@@ -372,17 +388,18 @@ const Dashboard = () => {
                 </ul>
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className="col-span-1 md:col-span-2 lg:col-span-1">
             <div className="bg-white shadow-md rounded-lg overflow-hidden">
               <div className="px-4 py-3">
                 <div className="flex justify-between items-center mb-2">
-                  <h5 className="text-lg font-semibold text-gray-800">
-                    Top Selling Items
-                  </h5>
+                <div className="flex justify-start items-center gap-x-2 text-lg  text-gray-700 my-5">
+                  <IoIosStar />
+                    <h1>Top Rated Item</h1>
+                  </div>
                   <a
-                    href="https://6ammart-admin.6amtech.com/admin/store/list"
+                    // href="https://6ammart-admin.6amtech.com/admin/store/list"
                     className="text-blue-600 text-sm font-medium"
                   >
                     View all
@@ -405,6 +422,13 @@ const Dashboard = () => {
                           <span className="text-base font-medium text-gray-800">
                             {item.title}
                           </span>
+                          <Rating
+                            placeholderRating={item.rating}
+                            initialRating={item.rating}
+                            emptySymbol={<img src={ratingGrey} className="icon" />}
+                            placeholderSymbol={<img src={ratingGrey} className="icon" />}
+                            fullSymbol={<img src={ratingYellow} className="icon" />}
+                          />
                         </div>
                         <div className="flex justify-between items-center mt-2">
                           <span className="text-sm text-gray-600">
@@ -419,7 +443,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-
+{/* 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
           <div className="col-span-1 md:col-span-2 lg:col-span-1 my-4">
             <div className="bg-white shadow-md rounded-lg overflow-hidden">
@@ -488,7 +512,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -10,6 +10,8 @@ import withAuth from "../HOC/withAuth";
 function Coupons() {
   return (
     <>
+    <div className="w-[350px] md:w-auto">
+      
       <div className="page-header">
         <h1 className="page-header-title flex items-center">
           <span className="page-header-icon mr-2">
@@ -45,7 +47,7 @@ function Coupons() {
             <button
               type="submit"
               className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold px-4 py-2 rounded-r-lg "
-            >
+              >
               <SearchIcon />
             </button>
           </form>
@@ -53,6 +55,7 @@ function Coupons() {
       </div>
       <CouponListTable/>
      </Card>
+              </div>
     </>
   );
 }

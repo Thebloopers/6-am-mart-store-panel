@@ -12,6 +12,7 @@ const NavItemMenu = () => {
 
   const [cookies, setCookie, removeCookie] = useCookies(["store"]);
 
+
   const navigate = useNavigate()
 
   const handleSignOut = () => {
@@ -37,8 +38,8 @@ const NavItemMenu = () => {
             <div className="flex justify-center items-center ">
               <MdArrowDropDown className="text-xl" />
               <div>
-                <h1 className="font-bold text-[#00868F] ">Jhon Miller</h1>
-                <h1 className="text-xs">johnmiller@gmail.com</h1>
+                <h1 className="font-bold text-[#00868F] ">{cookies.storeuser.store.firstName} {cookies.storeuser.store.lastName}</h1>
+                <h1 className="text-xs">{cookies.storeuser.store.email}</h1>
               </div>
               <img
                 src="https://6ammart-admin.6amtech.com/storage/app/public/vendor/2021-08-22-61214e5a0db7d.png"
@@ -59,8 +60,8 @@ const NavItemMenu = () => {
                   className="w-[35px] h-[35px] rounded-full"
                 />
                 <div>
-                  <h1 className="font-bold text-[#00868F] ">Jhon Miller</h1>
-                  <h1 className="text-xs">johnmiller@gmail.com</h1>
+                  <h1 className="font-bold text-[#00868F] ">{cookies.storeuser.store.firstName} {cookies.storeuser.store.lastName}</h1>
+                  <h1 className="text-xs">{cookies.storeuser.store.email}</h1>
                 </div>
               </div>
             </li>

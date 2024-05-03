@@ -47,7 +47,7 @@ const SubCategory = () => {
   };
 
   return (
-    <div className="w-full p-2 pt-4 md:pl-5 md:px-4 ">
+    <div className="w-auto p-2 pt-4 md:pl-5 md:px-4 ">
       <div className="flex items-center">
         <div className="p-2 text-xl">
           <MdCategory />
@@ -86,7 +86,7 @@ const SubCategory = () => {
             <option>.CSV</option>
           </select>
         </div>
-        <div className="mt-8 overflow-x-scroll">
+        <div className="mt-8 overflow-x-auto max-w-[350px] md:max-w-full">
           <table className="w-full min-w-[500px] text-center">
             <tr className="bg-gray-100">
               <th className="w-[25%] py-3 font-semibold">#</th>

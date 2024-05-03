@@ -243,11 +243,19 @@ function Newsale() {
                   placeholder="Search by product name"
                   disabled
                 />
-                <div className="flex justify-start flex-wrap items-center gap-x-6 mt-4 cursor-pointer">
+                <div className="grid grid-cols-2 flex-wrap items-center gap-x-6 mt-4 cursor-pointer h-full ">
                   {isLoading2 ? (
                     <span className="loading loading-spinner loading-lg text-center text-5xl text-gray-400 ml-[50%] mt-[40%]"></span>
                   ) : data2?.data?.length === 0 ? (
-                    <div>No Products Found Under This Category</div>
+                    <div className="flex flex-col justify-center items-center h-full w-full mt-[30%]">
+                      <img
+                        className=""
+                        src="https://6ammart-admin.6amtech.com/public/assets/admin/img/search-icon.png"
+                      />
+                      <h1 className="text-gray-400">
+                        No Products Found Under This Category
+                      </h1>
+                    </div>
                   ) : (
                     data2?.data?.map((item, index) => {
                       const modalId = `my_modal_${index}`; // Unique modal id for each item
@@ -392,16 +400,21 @@ function Newsale() {
                                 className=" btn btn-info text-white font-bold my-5"
                                 onClick={() => {
                                   // Check if the item is already in the cart
-                                  const itemAlreadyInCart = cart.some(
+                                  const itemIndex = cart.findIndex(
                                     (cartItem) => cartItem.item._id === item._id
                                   );
 
                                   // If the item is not already in the cart, add it
-                                  if (!itemAlreadyInCart) {
+                                  if (itemIndex === -1) {
                                     setCart([
                                       ...cart,
                                       { item: item, qty: counter },
                                     ]);
+                                  } else {
+                                    // If the item is already in the cart, update its quantity
+                                    const updatedCart = [...cart];
+                                    updatedCart[itemIndex].qty += counter;
+                                    setCart(updatedCart);
                                   }
                                   closeModal(modalId);
                                 }}
@@ -436,14 +449,16 @@ function Newsale() {
                 category={customer}
                 /> */}
 
-<select className="select w-full max-w-xs">
-  <option disabled selected>Select Customer</option>
-  <option>Homer</option>
-  <option>Marge</option>
-  <option>Bart</option>
-  <option>Lisa</option>
-  <option>Maggie</option>
-</select>
+                <select className="select w-full max-w-xs">
+                  <option disabled selected>
+                    Select Customer
+                  </option>
+                  <option>Homer</option>
+                  <option>Marge</option>
+                  <option>Bart</option>
+                  <option>Lisa</option>
+                  <option>Maggie</option>
+                </select>
               </label>
             </div>
 
@@ -489,11 +504,11 @@ function Newsale() {
           <div className="flex flex-row overflow-x-auto px-2 cart-table-scroll">
             <div
               className="flex flex-row overflow-x-auto px-2 cart-table-scroll"
-              style={{ maxHeight: "400px" }}
+              style={{ maxHeight: "300px" }}
             >
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[400px] bg-gray-100 table-fixed">
-                  <thead className="bg-gray-200 text-gray-700">
+                <table className="w-full min-w-[400px] bg-gray-100 table-fixed relative">
+                  <thead className="bg-gray-200 text-gray-700 sticky top-0">
                     <tr className="text-center">
                       <th className="py-3 px-4 border-b-2 border-gray-300">
                         Item
@@ -521,14 +536,81 @@ function Newsale() {
                               src={`${import.meta.env.VITE_IMAGE_URL}/${
                                 item?.item?.itemThumbnail[0]
                               }`}
-                              className="w-16 rounded-lg"
+                              className="w-16 rounded-lg h-12"
                             />
                             <h1 className="w-full text-sm">
                               {item?.item?.name}
                             </h1>
                           </td>
 
-                          <td className="py-2 px-4">{item?.qty}</td>
+                          <td className="py-2 px-4">
+                            {/* {item?.qty} */}
+                          <div className="">
+                                
+                                <div className="flex justify-end items-center gap-3">
+                                  <span
+                                    className="text-gray-500 text-5xl cursor-pointer"
+                                    onClick={() => {
+                                      // Check if the item is already in the cart
+                                      const itemIndex = cart.findIndex(
+                                        (cartItem) => cartItem.item._id === item?.item?._id
+                                      );
+                                      
+                                      console.log(item)
+    
+                                      // If the item is not already in the cart, add it
+                                      if (itemIndex !== -1)  {
+                                        // If the item is already in the cart, update its quantity
+                                        const updatedCart = [...cart];
+                                        if(updatedCart[itemIndex].qty > 1){
+
+                                          updatedCart[itemIndex].qty -= 1;
+                                          setCart(updatedCart);
+                                        }
+                                      }
+                                      
+                                    }}
+                                  >
+                                    -
+                                  </span>
+                                  <div className="border border-gray-400 h-[40px] w-[40px] rounded-lg">
+                                    <h1
+                                      className="text-center mt-2 cursor-default"
+                                      defaultValue={1}
+                                    >
+                                      {item?.qty}
+                                    </h1>
+                                  </div>
+                                  <span
+                                    className="text-gray-500 text-2xl cursor-pointer"
+                                    onClick={() => {
+                                      // Check if the item is already in the cart
+                                      const itemIndex = cart.findIndex(
+                                        (cartItem) => cartItem.item._id === item?.item?._id
+                                      );
+  
+                                      console.log(item)
+                                      // If the item is not already in the cart, add it
+                                      if (itemIndex !== -1)  {
+                                        // If the item is already in the cart, update its quantity
+                                        const updatedCart = [...cart];
+                                        
+
+                                          updatedCart[itemIndex].qty += 1;
+                                          setCart(updatedCart);
+                                        
+                                      }
+                                      
+                                    }}
+                                  >
+                                    +
+                                  </span>
+                                </div>
+                              </div>
+                          </td>
+
+
+
                           <td className="py-2 px-4">
                             ₹
                             {item?.item?.discounttype == "Amount"
@@ -572,7 +654,7 @@ function Newsale() {
                 </div>
                 <div className="text-sm border-b pb-2 flex justify-between p-2">
                   <span>Discount :</span>
-                  <span className="text-right">- ₹ 0.00</span>
+                  <span className="text-right"> ₹ 0.00</span>
                 </div>
                 <div className="text-sm border-b pb-2 flex justify-between p-2">
                   <span>Delivery fee :</span>
