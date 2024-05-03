@@ -93,8 +93,8 @@ function OrderTable2() {
           </tr>
         </thead>
         <tbody>
-          {tableData.map((data) => (
-            <tr>
+          {tableData.map((data,ind) => (
+            <tr key={ind}>
               <td className="px-4 py-2">{data.sl}</td>
               <td className="px-4 py-2">
                 <a
@@ -146,13 +146,13 @@ function OrderTable2() {
               <td className="px-4 py-2 text-center">
                 <div className="flex justify-center items-center gap-2">
                   <a
-                    href="https://efood-admin.6amtech.com/admin/orders/details/100089"
+                    // href="https://efood-admin.6amtech.com/admin/orders/details/100089"
                     className="btn btn-sm btn-outline-primary rounded-full p-2 hover:bg-blue-500 hover:text-white transition duration-300"
                   >
                     <i className="fa-solid fa-eye"></i>
                   </a>
                   <a
-                    href="https://efood-admin.6amtech.com/admin/orders/generate-invoice/100089"
+                    // href="https://efood-admin.6amtech.com/admin/orders/generate-invoice/100089"
                     className="btn btn-sm btn-outline-success rounded-full p-2 hover:bg-green-500 hover:text-white transition duration-300"
                     target="_blank"
                   >

@@ -31,7 +31,7 @@ const StoreConfig = () => {
     };
 
     return (
-        <div className='h-full w-full'>
+        <div className='w-[350px] md:w-auto'>
             <div className='flex flex-col gap-3'>
                 <div className='flex gap-2 items-center text-[2.8vh] font-semibold'>
                     <img src={storegear} alt="" />
@@ -51,30 +51,19 @@ const StoreConfig = () => {
                     </div>
                     <hr />
                     <div className='flex flex-wrap px-5 py-5 text-[1.8vh] justify-around gap-4'>
-                        <div className='flex items-center w-[32%] justify-between border-[1px] rounded px-3'>
+                        <div className='flex items-center w-full justify-between border-[1px] rounded px-3'>
                             <h1>Scheduled Order</h1>
                             <Switch size='medium' />
                         </div>
-                        <div className='flex items-center w-[32%] justify-between border-[1px] rounded px-3'>
+                        <div className='flex items-center w-full justify-between border-[1px] rounded px-3'>
                             <h1>Delivery</h1>
                             <Switch size='medium' />
                         </div>
-                        <div className='flex items-center w-[32%] justify-between border-[1px] rounded px-3'>
+                        <div className='flex items-center w-full justify-between border-[1px] rounded px-3'>
                             <h1>Take Away</h1>
                             <Switch size='medium' />
                         </div>
-                        <div className='flex items-center w-[32%] justify-between border-[1px] rounded px-3'>
-                            <h1>Veg</h1>
-                            <Switch size='medium' />
-                        </div>
-                        <div className='flex items-center w-[32%] justify-between border-[1px] rounded px-3'>
-                            <h1>Non Veg</h1>
-                            <Switch size='medium' />
-                        </div>
-                        <div className='flex items-center w-[32%] justify-between border-[1px] rounded px-3'>
-                            <h1>Cutlery</h1>
-                            <Switch size='medium' />
-                        </div>
+
                     </div>
                 </div>
                 <div className='flex flex-col shadow-lg'>
@@ -83,9 +72,9 @@ const StoreConfig = () => {
                         <h1>Basic Settings</h1>
                     </div>
                     <hr />
-                    <div className='w-full flex px-5 py-5'>
+                    <div className='w-full flex md:flex-row flex-col px-5 py-5'>
                         <div className='flex flex-wrap flex-col  text-[1.8vh] w-full  gap-5'>
-                            <div className='flex gap-8'>
+                            <div className='flex gap-8 md:flex-row flex-col'>
                                 <div className="w-full md:w-1/3">
                                     <label
                                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -160,8 +149,8 @@ const StoreConfig = () => {
                         <h1>Store Meta Data</h1>
                     </div>
                     <hr />
-                    <div className='flex px-5 w-full justify-between gap-5 py-5'>
-                        <div className='w-1/2 flex flex-col gap-3 py-3 px-5 shadow-md'>
+                    <div className='flex md:flex-row flex-col px-5 w-full justify-between gap-5 py-5'>
+                        <div className='md:w-1/2 flex flex-col gap-3 py-3 px-5 shadow-md'>
                             <label
                                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                 htmlFor="name"
@@ -187,7 +176,7 @@ const StoreConfig = () => {
                                 id="name"
                             ></textarea>
                         </div>
-                        <div className='w-1/2 flex flex-col gap-3 py-3 shadow-md px-5'>
+                        <div className='md:w-1/2 flex flex-col gap-3 py-3 shadow-md px-5'>
                             <div className='flex items-center gap-1 text-[2.2vh] font-semibold'>
                                 <BsFillGrid1X2Fill />
                                 <h1>Store Meta Data</h1>
@@ -204,7 +193,7 @@ const StoreConfig = () => {
                                             <img key={mapIndex} src={image} alt={`Selected ${mapIndex}`} className="w-[100px] h-[150px] overflow-hidden object-cover" />
                                         </div>
                                     ))}
-                                    <div className="w-[10vw] relative  rounded-lg border-dotted border-gray-200 border-2">
+                                    <div className="md:w-[10vw] relative  rounded-lg border-dotted border-gray-200 border-2">
                                         <img
                                             className="size-fit"
                                             src="https://6ammart-admin.6amtech.com/public/assets/admin/img/upload.png"

@@ -6,7 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 function CampaignsTable({ campaigns, price }) {
   return (
-    <div>
+    <div >
       <table className="w-full table-auto">
         <thead>
           <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">

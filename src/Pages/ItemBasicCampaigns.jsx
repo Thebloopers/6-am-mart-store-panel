@@ -23,10 +23,10 @@ function ItemBasicCampaigns({ price }) {
     },
   ];
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="w-[350px] md:w-auto container mx-auto px-4 py-8">
       <div className="bg-white shadow-md rounded-lg">
         <div className="px-6 py-4">
-          <div className="flex justify-between items-center">
+          <div className="flex md:flex-row flex-col gap-5 justify-between items-center">
             <div className="flex items-center">
               <img
                 src="https://6ammart-admin.6amtech.com/public/assets/admin/img/campaign.png"
@@ -44,7 +44,7 @@ function ItemBasicCampaigns({ price }) {
             </Link>
           </div>
           <hr className="my-4" />
-          <div className="flex items-center mb-4">
+          <div className="flex md:flex-row  gap-5 flex-col items-center mb-4">
             <h2 className="text-lg font-semibold text-gray-800 mr-4">
               Campaign list
             </h2>
@@ -70,6 +70,7 @@ function ItemBasicCampaigns({ price }) {
           </div>
           <div className="overflow-x-auto max-w-[400px] md:max-w-full">
             {/* <CampaignsTable price={"price"} campaigns={campaigns}/> */}
+            <div >
 
             <table className="w-full table-auto">
               <thead>
@@ -124,6 +125,7 @@ function ItemBasicCampaigns({ price }) {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         </div>
         <div className="px-6 py-4">
