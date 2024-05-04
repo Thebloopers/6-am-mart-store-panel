@@ -135,12 +135,12 @@ function Newsale() {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       {/* add new customer modal  */}
 
-      <dialog id="add_customer_modal" className="modal modal-top w-1/2 m-auto">
+      <dialog id="add_customer_modal" className="modal modal-top w-[95%] md:w-1/2 m-auto ">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Add new customer</h3>
 
-          <div className="flex justify-around items-center ">
-            <label className="form-control w-full max-w-xs focus:outline-none">
+          <div className="flex justify-around items-center gap-x-5 md:gap-x-0">
+            <label className="form-control w-full max-w-xs focus:outline-none ">
               <div className="label">
                 <span className="label-text">First Name</span>
               </div>
@@ -162,7 +162,7 @@ function Newsale() {
               />
             </label>
           </div>
-          <div className="flex justify-around items-center mt-3">
+          <div className="flex justify-around items-center mt-3 gap-x-5 md:gap-x-0">
             <label className="form-control w-full max-w-xs focus:outline-none">
               <div className="label">
                 <span className="label-text">Email*</span>
@@ -174,9 +174,9 @@ function Newsale() {
               />
             </label>
 
-            <label className="form-control w-full max-w-xs focus:outline-none">
-              <div className="label">
-                <span className="label-text">Phone (With country code)*</span>
+            <label className="form-control w-full md:max-w-xs focus:outline-none">
+              <div className="label w-full">
+                <span className="label-text w-full">Phone( country code)*</span>
               </div>
               <input
                 type="text"
@@ -434,14 +434,16 @@ function Newsale() {
           </div>
         </div>
       </div>
-      <div className="order--pos-right bg-white rounded-lg shadow-lg p-6">
-        <h2 className="text-xl font-semibold mb-4">Billing Section</h2>
+      <div className="order--pos-right bg-white rounded-lg shadow-lg md:p-6">
+        <h2 className="text-xl font-semibold md:mb md:py-0 md:px-0 px-3 py-4">
+          Billing Section
+        </h2>
         <form>
-          <div className="flex flex-col md:flex-row items-center justify-between p-3 rounded-lg">
+          <div className="flex flex-col  md:flex-row items-center justify-between  p-3 rounded-lg">
             <div className="relative flex-1 w-full md:mx-2 mb-2 md:mb-0">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
+              {/* <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span> */}
 
-              <label className="form-control w-full max-w-[300px] border border-gray-300 rounded-lg">
+              <label className="form-control w-full md:max-w-[300px] border border-gray-300 rounded-lg">
                 {/* <CustomDropdown1
                 options={data2 ? data2?.category?.map((item) => { return item }) : []}
                 onSelect={onCustomerSelect}
@@ -449,7 +451,7 @@ function Newsale() {
                 category={customer}
                 /> */}
 
-                <select className="select w-full max-w-xs">
+                <select className="select w-full md:max-w-xs">
                   <option disabled selected>
                     Select Customer
                   </option>
@@ -463,7 +465,7 @@ function Newsale() {
             </div>
 
             <button
-              className="bg-[#20A7AF] rounded font-regular py-3 px-6 text-white"
+              className="bg-[#20A7AF]  md:max-w-[200px] rounded font-regular py-3 px-6 text-white w-full my-4 md:my-0"
               id="add_new_customer"
               type="button"
               // onClick={() => setModal(!modal)}
@@ -474,43 +476,22 @@ function Newsale() {
               Add new customer
             </button>
           </div>
-          <div className="pos-delivery-option rounded-lg p-4">
-            <div className="flex justify-between items-center mb-4">
-              <h5 className="text-xl flex items-center gap-2">
-                <span className="card-title-icon">
-                  <i className="tio-user"></i>
-                </span>
-                <span>
-                  Delivery Information <small>(Home Delivery)</small>
-                </span>
-              </h5>
-              <span
-                className="delivery-edit-icon text-primary cursor-pointer"
-                id="delivery_address"
-                data-toggle="modal"
-                data-target="#deliveryAddrModal"
-              >
-                <i className="tio-edit"></i>
-              </span>
-            </div>
-            <div
-              className="pos-delivery-options-info flex flex-wrap"
-              id="del-add"
-            ></div>
+          <div className="pos-delivery-option rounded-lg md:p-2  w-full ">
+            <h5 className="text-xl p-3">Delivery Information</h5>
           </div>
         </form>
-        <div id="cart-items" className="mt-6"></div>
+
         <div id="cart" className="w-full">
-          <div className="flex flex-row overflow-x-auto px-2 cart-table-scroll">
+          <div className="flex flex-row overflow-x-auto md:px-2 cart-table-scroll">
             <div
               className="flex flex-row overflow-x-auto px-2 cart-table-scroll"
               style={{ maxHeight: "300px" }}
             >
-              <div className="overflow-x-auto">
+              <div className="w-full overflow-x-auto">
                 <table className="w-full min-w-[400px] bg-gray-100 table-fixed relative">
                   <thead className="bg-gray-200 text-gray-700 sticky top-0">
                     <tr className="text-center">
-                      <th className="py-3 px-4 border-b-2 border-gray-300">
+                      <th className="md:py-3 md:px-4 border-b-2 border-gray-300">
                         Item
                       </th>
                       <th className="py-3 px-4 border-b-2 border-gray-300">
@@ -545,71 +526,65 @@ function Newsale() {
 
                           <td className="py-2 px-4">
                             {/* {item?.qty} */}
-                          <div className="">
-                                
-                                <div className="flex justify-end items-center gap-3">
-                                  <span
-                                    className="text-gray-500 text-5xl cursor-pointer"
-                                    onClick={() => {
-                                      // Check if the item is already in the cart
-                                      const itemIndex = cart.findIndex(
-                                        (cartItem) => cartItem.item._id === item?.item?._id
-                                      );
-                                      
-                                      console.log(item)
-    
-                                      // If the item is not already in the cart, add it
-                                      if (itemIndex !== -1)  {
-                                        // If the item is already in the cart, update its quantity
-                                        const updatedCart = [...cart];
-                                        if(updatedCart[itemIndex].qty > 1){
+                            <div className="">
+                              <div className="flex justify-end items-center gap-3">
+                                <span
+                                  className="text-gray-500 text-5xl cursor-pointer"
+                                  onClick={() => {
+                                    // Check if the item is already in the cart
+                                    const itemIndex = cart.findIndex(
+                                      (cartItem) =>
+                                        cartItem.item._id === item?.item?._id
+                                    );
 
-                                          updatedCart[itemIndex].qty -= 1;
-                                          setCart(updatedCart);
-                                        }
-                                      }
-                                      
-                                    }}
-                                  >
-                                    -
-                                  </span>
-                                  <div className="border border-gray-400 h-[40px] w-[40px] rounded-lg">
-                                    <h1
-                                      className="text-center mt-2 cursor-default"
-                                      defaultValue={1}
-                                    >
-                                      {item?.qty}
-                                    </h1>
-                                  </div>
-                                  <span
-                                    className="text-gray-500 text-2xl cursor-pointer"
-                                    onClick={() => {
-                                      // Check if the item is already in the cart
-                                      const itemIndex = cart.findIndex(
-                                        (cartItem) => cartItem.item._id === item?.item?._id
-                                      );
-  
-                                      console.log(item)
-                                      // If the item is not already in the cart, add it
-                                      if (itemIndex !== -1)  {
-                                        // If the item is already in the cart, update its quantity
-                                        const updatedCart = [...cart];
-                                        
+                                    console.log(item);
 
-                                          updatedCart[itemIndex].qty += 1;
-                                          setCart(updatedCart);
-                                        
+                                    // If the item is not already in the cart, add it
+                                    if (itemIndex !== -1) {
+                                      // If the item is already in the cart, update its quantity
+                                      const updatedCart = [...cart];
+                                      if (updatedCart[itemIndex].qty > 1) {
+                                        updatedCart[itemIndex].qty -= 1;
+                                        setCart(updatedCart);
                                       }
-                                      
-                                    }}
+                                    }
+                                  }}
+                                >
+                                  -
+                                </span>
+                                <div className="border border-gray-400 h-[40px] w-[40px] rounded-lg">
+                                  <h1
+                                    className="text-center mt-2 cursor-default"
+                                    defaultValue={1}
                                   >
-                                    +
-                                  </span>
+                                    {item?.qty}
+                                  </h1>
                                 </div>
+                                <span
+                                  className="text-gray-500 text-2xl cursor-pointer"
+                                  onClick={() => {
+                                    // Check if the item is already in the cart
+                                    const itemIndex = cart.findIndex(
+                                      (cartItem) =>
+                                        cartItem.item._id === item?.item?._id
+                                    );
+
+                                    console.log(item);
+                                    // If the item is not already in the cart, add it
+                                    if (itemIndex !== -1) {
+                                      // If the item is already in the cart, update its quantity
+                                      const updatedCart = [...cart];
+
+                                      updatedCart[itemIndex].qty += 1;
+                                      setCart(updatedCart);
+                                    }
+                                  }}
+                                >
+                                  +
+                                </span>
                               </div>
+                            </div>
                           </td>
-
-
 
                           <td className="py-2 px-4">
                             ₹
@@ -691,7 +666,7 @@ function Newsale() {
                         hidden
                         checked
                       />
-                      <span className="text-sm border py-2 px-4 sm:px-12 block text-center sm:inline-block bg-[#334257] text-white">
+                      <span className="text-sm border py-3 rounded-lg px-4 sm:px-12 block text-center sm:inline-block bg-[#334257] text-white">
                         Cash On Delivery
                       </span>
                     </label>
@@ -699,7 +674,7 @@ function Newsale() {
                   <li>
                     <label className="block">
                       <input type="radio" name="type" value="wallet" hidden />
-                      <span className="text-sm border py-2 px-4 sm:px-12 block text-center sm:inline-block text-[#334257]">
+                      <span className="text-sm border py-3 px-4 sm:px-12 block text-center sm:inline-block text-[#334257] rounded-lg">
                         Wallet
                       </span>
                     </label>
@@ -707,11 +682,26 @@ function Newsale() {
                 </ul>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-white mt-8">
+              <div className="flex justify-center md:justify-start items-center  gap-x-6 w-full md:mt-12 my-12">
+                <button
+                  type="button"
+                  className="h-12 hover:bg-red-400 border hover:text-white md:px-12 px-5 rounded-md flex justify-center items-center sm:flex sm:justify-start"
+                >
+                  Clear Cart
+                </button>
+                <button
+                  type="submit"
+                  className="h-12 border text-white px-5 md:px-12 rounded-md bg-[#24BAC3] flex justify-center items-center sm:flex sm:justify-end"
+                >
+                  Place Order
+                </button>
+              </div>
+
+              {/* <div className="grid md:grid-cols-1 sm:grid-cols-1 gap-4 bg-white mt-8">
                 <div className="col-span-full md:col-span-1">
                   <button
                     type="button"
-                    className=" h-12 hover:bg-red-400 border hover:text-white px-12 rounded-md "
+                    className="h-12 hover:bg-red-400 border hover:text-white px-12 rounded-md flex justify-center items-center sm:flex sm:justify-start"
                   >
                     Clear Cart
                   </button>
@@ -719,12 +709,15 @@ function Newsale() {
                 <div className="col-span-full md:col-span-1">
                   <button
                     type="submit"
-                    className=" h-12 border text-white px-12 rounded-md bg-[#24BAC3]"
+                    className="h-12 border text-white px-12 rounded-md bg-[#24BAC3] flex justify-center items-center sm:flex sm:justify-end"
                   >
                     Place Order
                   </button>
                 </div>
-              </div>
+              </div> */}
+
+
+
             </form>
           </div>
         </div>
