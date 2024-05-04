@@ -136,7 +136,7 @@ function Layout(props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex" }} className="w-full">
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -145,7 +145,7 @@ function Layout(props) {
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar className="bg-white">
+        <Toolbar className="bg-white justify-between md:justify-end">
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -206,7 +206,7 @@ function Layout(props) {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        <Toolbar />
+        {/* <Toolbar /> */}
         <Outlet />
       </Box>
     </Box>
