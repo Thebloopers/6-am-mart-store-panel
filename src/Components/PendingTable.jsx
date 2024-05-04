@@ -1,6 +1,8 @@
 import React from "react";
 import { FaCaretDown } from "react-icons/fa";
 import { FaCaretUp } from "react-icons/fa6";
+import { MdDelete } from "react-icons/md";
+import { RiEditFill } from "react-icons/ri";
 
 function PendingTable() {
   const tableData = [
@@ -72,7 +74,7 @@ function PendingTable() {
     },
   ];
   return (
-    <div className="overflow-x-auto max-w-[340px] md:max-w-full">
+    <div className="overflow-x-auto max-w-[440px] md:max-w-full">
       <table className="table-auto min-w-full border-collapse border border-gray-200">
         <thead className="bg-gray-100">
           <tr>
@@ -93,8 +95,8 @@ function PendingTable() {
           </tr>
         </thead>
         <tbody>
-          {tableData.map((data) => (
-            <tr>
+          {tableData.map((data,ind) => (
+            <tr key={ind}>
               <td className="px-4 py-2">{data.sl}</td>
               <td className="px-4 py-2">
                 <a
@@ -124,11 +126,7 @@ function PendingTable() {
                   {data.customerInfo}
                 </a>
               </td>
-              {/* <td className="px-4 py-2">
-                <span className="inline-block bg-blue-200 text-blue-800 px-2 py-1 rounded">
-                  {data.branch}
-                </span>
-              </td> */}
+             
               <td className="px-4 py-2">
                 <div>{data.totalAmount}</div>
                 <span className="text-green-600">Paid</span>
@@ -138,25 +136,21 @@ function PendingTable() {
                   {data?.orderStatus}
                 </span>
               </td>
-              {/* <td className="px-4 py-2">
-                <span className="inline-block bg-green-200 text-green-800 px-2 py-1 rounded">
-                  {data?.orderType}
-                </span>
-              </td> */}
+              
               <td className="px-4 py-2 text-center">
                 <div className="flex justify-center items-center gap-2">
                   <a
-                    href="https://efood-admin.6amtech.com/admin/orders/details/100089"
+                    // href="https://efood-admin.6amtech.com/admin/orders/details/100089"
                     className="btn btn-sm btn-outline-primary rounded-full p-2 hover:bg-blue-500 hover:text-white transition duration-300"
                   >
-                    <i className="fa-solid fa-eye"></i>
+                    <RiEditFill />
                   </a>
                   <a
-                    href="https://efood-admin.6amtech.com/admin/orders/generate-invoice/100089"
+                    // href="https://efood-admin.6amtech.com/admin/orders/generate-invoice/100089"
                     className="btn btn-sm btn-outline-success rounded-full p-2 hover:bg-green-500 hover:text-white transition duration-300"
                     target="_blank"
                   >
-                    <i className="fa-solid fa-floppy-disk"></i>
+                    <MdDelete />
                   </a>
                 </div>
               </td>
