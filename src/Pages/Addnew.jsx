@@ -12,6 +12,8 @@ import { useMutation, useQuery } from "react-query";
 import { addNewItem, getAttributes, getUnits } from "../helpers/item";
 import withAuth from "../HOC/withAuth";
 import { useCookies } from "react-cookie";
+import { MdOutlineCancel } from "react-icons/md";
+import { Autocomplete, Chip, FormControl, Input, TextField } from "@mui/material";
 
 
 const Addnew = () => {
@@ -23,6 +25,9 @@ const Addnew = () => {
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedThumbnail, setSelectedThumbnail] = useState([]);
 
+  const [images, setImages] = useState([]);
+  const [thumbnail, setThumbnail] = useState([]);
+
 
   const [selectedAttribute, setSelectedAttribute] = useState(null);
   const [selectedUnit, setSelectedUnit] = useState(null);
@@ -32,6 +37,10 @@ const Addnew = () => {
   const [mainCategory, setMainCategory] = useState(null);
 
   const [subCategory, setSubCategory] = useState(null);
+
+  const [attributeArray, setattributeArray] = useState([])
+  const [values, setValues] = useState([]);
+  const [currValue, setCurrValue] = useState("");
 
   const { isError: isError1, isSuccess: isSuccess1, data: data1, refetch: refetch1 } = useQuery(['categories', { cookies }], () => getAllCategories(cookies))
 
@@ -222,7 +231,7 @@ const Addnew = () => {
     );
 
 
-    setSelectedThumbnail([ imagePreviews]);
+    setSelectedThumbnail([imagePreviews]);
 
 
   };
@@ -262,6 +271,95 @@ const Addnew = () => {
     },
   });
 
+  const handleImageChange = (event) => {
+    const files = event.target.files;
+    const maxFiles = 5;
+
+    if (files.length + images.length > maxFiles) {
+      alert(`You can upload maximum ${maxFiles} images.`);
+      return;
+    }
+
+    const selectedImages = Array.from(files).map((file) =>
+      URL.createObjectURL(file)
+    );
+    setImages([...images, ...selectedImages]);
+  };
+
+  const handleThumbnailChange = (event) => {
+    const files = event.target.files;
+
+    const selectedThumbnail = Array.from(files).map((file) =>
+      URL.createObjectURL(file)
+    );
+    console.log(selectedThumbnail[0]);
+    setThumbnail([...selectedThumbnail]);
+  };
+
+  const handleRemoveImage = (indexToRemove) => {
+    setImages(images.filter((_, index) => index !== indexToRemove));
+  };
+  
+  const [autoComplete, setAutoComplete] = useState({
+    store: "",
+    category: "",
+    subCategory: "",
+    unit: "",
+    variants: [],
+    discounttype: "",
+  });
+
+
+  const handleAutocompleteChange = (name) => (event, newValue) => {
+    // Using name attribute to identify the field
+    event.preventDefault();
+
+    if (name === "discounttype") {
+      return setAutoComplete({
+        ...autoComplete,
+        [name]: newValue?.label,
+      });
+    }
+    if (name === "variants") {
+      return setAutoComplete({
+        ...autoComplete,
+        [name]: newValue,
+      });
+    }
+    return setAutoComplete({
+      ...autoComplete,
+      [name]: newValue?._id,
+    });
+  };
+
+  const handleKeyUp = (e) => {
+    console.log(e.keyCode);
+
+    if (e.target.value.length <= 0) {
+      return;
+    }
+    else {
+      setValues((oldState) => [...oldState, e.target.value]);
+      setCurrValue("");
+    }
+
+  };
+
+  // useEffect(() => {
+  //   console.log(values);
+  // }, [values]);
+
+  const handleChange = (e) => {
+    setCurrValue(e.target.value);
+  };
+
+  const handleDelete = (item, index) => {
+    let arr = [...values]
+    arr.splice(index, 1)
+    console.log(item)
+    setValues(arr)
+  }
+
 
   return (
     <div className="relative">
@@ -290,6 +388,9 @@ const Addnew = () => {
 
           <div className="w-full shadow-lg border border-gray-100 rounded-lg">
             <h1 className="border-b-2 border-gray-300 p-4">Item Info</h1>
+            <div className="py-8">
+
+            
             <label className="form-control w-full p-6">
               <div className="label">
                 <span className="label-text">Name(EN)</span>
@@ -303,7 +404,7 @@ const Addnew = () => {
 
               />
             </label>
-
+            
             <label className="form-control w-full p-6 mb-4">
               <div className="label">
                 <span className="label-text">Name(EN)</span>
@@ -316,73 +417,97 @@ const Addnew = () => {
 
               ></textarea>
             </label>
+            </div>
           </div>
 
           <div className="w-full rounded-lg shadow-lg">
             <h1 className="border-b-2 border-gray-300 p-4">Item Image</h1>
 
 
-            <div className="flex">
-              <label className="form-control w-full max-w-xl p-3">
-                <div className="label">
-                  <span className="label-text">Image</span>
-                </div>
-                {selectedImages?.map((image, mapIndex) => (
-                  <div className="flex justify-center items-center" key={mapIndex}>
-                    <img src={image} alt={`Selected ${mapIndex}`} className="w-[100px] h-[150px] -ml-[8vw] overflow-hidden object-cover" />
-                  </div>
-                ))}
-
-
-                <div className="w-[10vw] relative mt-7  rounded-lg border-dotted border-gray-200 border-2">
+            <div className="flex flex-col">
+              <div className="form-control w-full max-w-xl p-3">
+                <div className="flex flex-col md:flex-row justify-center items-center gap-2 ">
+                <div
+                  className={`w-44 h-44 relative rounded-md overflow-hidden bg-gray-200  ${images.length >= 5 ? "hidden" : "block"
+                    }`}
+                >
                   <img
-                    className="size-fit"
-                    src="https://6ammart-admin.6amtech.com/public/assets/admin/img/upload.png"
-                    alt=""
+                    className="object-cover w-full h-full"
+                    src="https://6ammart-admin.6amtech.com/public/assets/admin/img/upload-img.png"
+                    alt="Thumbnail"
                   />
-                  <div className="absolute w-[50px] h-[100px]">
+                  <label
+                    htmlFor="uploadInput"
+                    className="absolute inset-0 flex justify-center items-center cursor-pointer bg-black bg-opacity-50 text-white text-sm font-semibold rounded-md opacity-0 hover:opacity-100 transition duration-300 ease-in-out"
+                  >
                     <input
+                      id="uploadInput"
                       type="file"
-                      placeholder="New item"
-                      className="input input-bordered w-full max-w-xl outline-none hidden "
-                      onChange={handleFileChange}
-                      multiple
                       name="itemImage"
+                      className="hidden"
+                      accept="image/*"
+                      multiple
+                      onChange={handleImageChange}
+                      required
                     />
-                  </div>
-
+                    <i className="fas fa-upload mr-2"></i>Upload Image
+                  </label>
                 </div>
-              </label>
-              <label className="form-control w-full max-w-xl p-3">
-                <div className="label">
-                  <span className="label-text">Thumbnail</span>
+
+                  {images.length > 0 &&
+                    images.map((image, index) => (
+                      <div className="w-44 h-44 flex items-center justify-center p-1 border-dashed border-2 border-gray-400 rounded relative">
+                        <button
+                          className="absolute top-2 right-2 text-white bg-red-500 rounded-full w-8 h-8 flex justify-center items-center"
+                          onClick={() => handleRemoveImage(index)}
+                        >
+                          <MdOutlineCancel size="24px" />
+                        </button>
+                        <img
+                          key={index}
+                          className="rounded object-cover w-full h-full mx-auto my-auto"
+                          src={image}
+                          alt={`Uploaded Image ${index + 1}`}
+                        />
+                      </div>
+                    ))}
                 </div>
-                {selectedThumbnail?.map((image, mapIndex) => (
-                  <div className="flex justify-center items-center" key={mapIndex}>
-                    <img src={image} alt={`Selected ${mapIndex}`} className="w-[100px] h-[150px] -ml-[8vw] overflow-hidden object-cover" />
-                  </div>
-                ))}
 
 
-                <div className="w-[10vw] relative mt-7  rounded-lg border-dotted border-gray-200 border-2">
+
+                
+              </div>
+              <div className="w-full flex justify-center items-center max-w-xl p-3">
+                <div className="flex flex-col items-center">
+
+                <span className="label-text">Thumbnail</span>
+                <div className="w-44 h-44 relative rounded-md overflow-hidden bg-gray-200">
                   <img
-                    className="size-fit"
-                    src="https://6ammart-admin.6amtech.com/public/assets/admin/img/upload.png"
-                    alt=""
+                    className="object-cover w-full h-full"
+                    src="https://6ammart-admin.6amtech.com/public/assets/admin/img/upload-img.png"
+                    alt="Thumbnail"
                   />
-                  <div className="absolute w-[50px] h-[100px]">
+                  <img
+                    className="absolute top-0 rounded object-cover w-full h-full "
+                    src={thumbnail[0]}
+                  />
+                  <label className="absolute inset-0 flex justify-center items-center cursor-pointer bg-black bg-opacity-50 text-white text-sm font-semibold rounded-md opacity-0 hover:opacity-100 transition duration-300 ease-in-out">
                     <input
+                      id="uploadInput"
                       type="file"
-                      placeholder="New item"
-                      className="input input-bordered w-full max-w-xl outline-none hidden "
-                      onChange={handleFileChangeThumbnail}
-                      name="itemThumbnail"
+                      name="itemImage"
+                      className="hidden"
+                      accept="image/*"
+                      multiple
+                      onChange={handleThumbnailChange}
+                      required
                     />
-                  </div>
-
+                    <i className="fas fa-upload mr-2"></i>Upload Image
+                  </label>
+                </div>
                 </div>
 
-              </label>
+              </div>
             </div>
           </div>
         </div>
@@ -516,31 +641,133 @@ const Addnew = () => {
 
           </div>
         </div>
-        <div className="mt-10 shadow-lg rounded-lg ">
-          <h1 className="font-bold text-gray-700 border-b p-3"><CiDollar className="inline-block text-xl text-gray-700 " />Attribute
+        <div className='border py-3 mt-5 shadow-lg rounded-lg'>
+                <div className="px-6 py-4 border-b">
+                  <h5 className="text-lg font-semibold text-gray-800">
+                    <span className="mr-2">
+                      <i className="tio-label-outlined"></i>
+                    </span>
+                    Attribute
+                  </h5>
+                </div>
+                <div className="p-4">
+                  <div className="gap-4">
+                    <div className="col-span-1 w-full">
+                      <div className="mb-4">
+                        <Autocomplete
+                          multiple
+                          disablePortal
+                          id="combo-box-demo"
+                          name="attribute"
+                          sx={{ minWidth: { xs: 10, md: 990 } }}
+                          options={
+                            data4?.data?.length > 0 &&
+                            data4?.data?.map((doc) => ({
+                              label: doc.name,
+                              _id: doc._id,
+                            }))
+                          }
+                          onChange={handleAutocompleteChange("variants")}
+                          y
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              // sx={{ minWidth:  {xs: 10, md: 1200} }}
+                              className="w-full"
+                              label="Attribute"
+                            />
+                          )}
+                          required
+                        />
+                      </div>
 
-          </h1>
+                      {autoComplete.variants.length > 0 ? (
 
 
-          <div className="flex justify-start gap-x-2 items-center flex-wrap mt-4 px-2 py-5">
-            <label className="form-control w-full ">
-              <div className="label">
-                <span className="label-text my-2">Attribute</span>
+                        <div className="flex flex-col gap-2 p-2 w-full">
+                          <div className="flex justify-between items-center">
+
+
+
+                              {autoComplete.variants.map((item, index) => (
+                            <form  >
+                                <div key={index}>
+
+                                
+                              <h1>{item.label}</h1>
+                              {/* <input onBlur={(e) => attributeTable(e)} className="border rounded p-1" type="text" placeholder="Enter choices value" /> */}
+                              <FormControl >
+                                <div className={"container"}>
+                                  {values.map((item, index) => (
+                                    <Chip size="small" onDelete={() => handleDelete(item, index)} label={item} />
+                                    
+                                  ))}
+                                </div>
+                                <Input
+                                  value={currValue}
+                                  onChange={handleChange}
+                                  onBlur={handleKeyUp}
+                                  className="w-60"
+                                />
+                              </FormControl>
+                            </div>
+                            </form>
+                              ))}
+                          </div>
+                          {
+                            values.length >= 0 ? (
+                              <div className="w-full py-2 px-2 h-fit">
+                                <table className="w-full">
+                                  <thead className="w-full bg-teal-100 h-11 text-[1.8vh]">
+                                    <tr>
+                                      <th className="text-center">
+                                        <span>Variant</span>
+                                      </th>
+                                      <th className="text-center">
+                                        <span>Variant Price</span>
+                                      </th>
+                                      <th className="text-center">
+                                        <span>Stock</span>
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody className="">
+                                    {values.map((item, index) => (
+                                      <tr key={index} className="">
+                                        <td className="w-20 text-center py-5">
+                                          <label htmlFor="">{item}</label>
+                                        </td>
+                                        <td className="w-56 px-3">
+                                          <input className="w-full border h-11 rounded px-3" type="text" />
+                                        </td>
+                                        <td className="w-56 px-3">
+                                          <input className="w-full border h-11 rounded px-3" type="text" />
+                                        </td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              </div>
+                            ) : (<h1>value is greater than 1</h1>)
+                          }
+                        </div>
+
+
+                        //  <div className="flex flex-col gap-2 p-2">
+                        //   <h1>{autoComplete.variants[0].label}</h1>
+                        //   <input className="border rounded p-1" type="text" placeholder="Enter choices value" />
+                        // </div>
+                      ) : (
+                        <h1>Insert a attribute</h1>
+                      )}
+
+
+
+                      {/* Maximum Purchase Quantity */}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <CustomDropdown
-                options={data4 ? data4?.data?.map((item) => { return item }) : []}
-                onSelect={onSelectAttribute}
-                category={"attribute"}
-                dropdown={"attribute"}
-
-
-              />
-            </label>
-
-
-
-          </div>
-        </div>
 
 
         <div className="my-10 shadow-lg p-5">
