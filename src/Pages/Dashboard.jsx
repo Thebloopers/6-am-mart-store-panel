@@ -16,6 +16,7 @@ import ratingGrey from "../assets/star-grey.png";
 import ratingYellow from "../assets/star-yellow.png";
 import { IoIosStar } from "react-icons/io";
 import { MdOutlineBarChart } from "react-icons/md";
+import { ResponsiveContainer } from "recharts";
 
 
 // import { GoDotFill } from "react-icons/go";
@@ -143,7 +144,7 @@ const Dashboard = () => {
     </svg>;
 
   return (
-    <div className="w-auto">
+    <div className="w-full "  >
       <div className="flex justify-between items-center ">
         <div className="text-2xl text-gray-800 flex justify-start gap-3 items-center">
           <MdDashboardCustomize />
@@ -279,7 +280,7 @@ const Dashboard = () => {
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-start my-5 gap-x-3 w-full gap-y-5">
-          <div className=" w-screen overflow-x-auto p-4 md:w-[70%] shadow-lg rounded-lg">
+          <div className="overflow-x-auto p-4 md:w-[70%] shadow-lg rounded-lg">
             <div className="flex justify-around items-center mt-3">
               <div>
                 <h1 className="text-gray-700 text-xl ">$ 858.40</h1>
@@ -300,13 +301,15 @@ const Dashboard = () => {
                 <option> This Week</option>
               </select>
             </div>
+            <ResponsiveContainer width={100} height="80%">
             <Chart />
+            </ResponsiveContainer>
           </div>
 
-          <div className="shadow-lg rounded-lg flex flex-col  justify-center items-start w-full  md:w-1/3">
-            <div className="flex justify-between items-center mt-4 px-3 w-full">
+          <div className="shadow-lg rounded-lg flex flex-col  justify-center items-start w-fit">
+            <div className="flex md:flex-row flex-col justify-between items-center mt-4 px-3 w-full">
               <h1 className="text-gray-600 font-bold">User Statistics</h1>
-              <select className="select w-full max-w-[200px] focus:outline-none border border-gray-300">
+              <select className="select w-full focus:outline-none border border-gray-300">
                 <option disabled selected>
                   This Year
                 </option>
@@ -315,21 +318,23 @@ const Dashboard = () => {
                 <option> This Week</option>
               </select>
             </div>
+            {/* <ResponsiveContainer width={100} height="80%"> */}
             <PiChart />
-            <div className="flex justify-evenly items-center mb-5 gap-x-5">
+            {/* </ResponsiveContainer> */}
+            <div className="flex justify-evenly text-center items-center py-1 gap-x-5 px-3">
               <h1>
                 {" "}
-                <GoDotFill className="inline-block text-2xl text-[#005555]" />{" "}
+                <GoDotFill className="inline-block text-[2vh] text-[#005555]" />{" "}
                 Customer 24
               </h1>
               <h1>
                 {" "}
-                <GoDotFill className="inline-block text-2xl text-[#00AA96]" />{" "}
+                <GoDotFill className="inline-block text-[2vh] text-[#00AA96]" />{" "}
                 Store 15
               </h1>
               <h1>
                 {" "}
-                <GoDotFill className="inline-block text-2xl text-[#B9E0E0]" />{" "}
+                <GoDotFill className="inline-block text-[2vh] text-[#B9E0E0]" />{" "}
                 Delivery man 6
               </h1>
             </div>

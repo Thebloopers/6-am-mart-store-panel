@@ -73,7 +73,7 @@ function Sidebarlist() {
                 <ListItemIcon>
                   <MdDashboard className="text-white" />
                 </ListItemIcon>
-                <ListItemText className="-mx-6" primary="Dashboard" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-6" primary="Dashboard" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -88,7 +88,7 @@ function Sidebarlist() {
                 <ListItemIcon>
                   <MdOutlineNewLabel className="text-white" />
                 </ListItemIcon>
-                <ListItemText className="-mx-6" primary="New Sale" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-6" primary="New Sale" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -117,6 +117,7 @@ function Sidebarlist() {
               <FaShoppingCart className="text-white" />
             </ListItemIcon>
             <ListItemText
+            primaryTypographyProps={{fontSize: '1.9vh'}}
               className="-mx-3"
               primary="Orders"
               sx={{ opacity: open ? 1 : 0 }}
@@ -135,7 +136,8 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText primary="All" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+              primaryTypographyProps={{fontSize: '1.9vh'}} primary="All" sx={{ opacity: open ? 1 : 0 }} />
               <span className="ml-auto bg-blue-500 text-white rounded-full px-2 py-1 text-xs">
                 {30}
               </span>
@@ -152,7 +154,8 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText primary="Pending" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+              primaryTypographyProps={{fontSize: '1.9vh'}}  primary="Pending" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </Link>
 
@@ -167,6 +170,7 @@ function Sidebarlist() {
               ></ListItemIcon>
 
               <ListItemText
+              primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Confirmed"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -183,7 +187,8 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText primary="Cooking" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+              primaryTypographyProps={{fontSize: '1.9vh'}} primary="Cooking" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </Link> */}
 
@@ -198,6 +203,7 @@ function Sidebarlist() {
               ></ListItemIcon>
 
               <ListItemText
+              primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Ready For Delivery"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -214,6 +220,7 @@ function Sidebarlist() {
               ></ListItemIcon>
 
               <ListItemText
+              primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Item On The Way"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -229,7 +236,8 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText primary="Delivery" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+              primaryTypographyProps={{fontSize: '1.9vh'}} primary="Delivery" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </Link>
           <Link onClick={""} to={"refunded"}>
@@ -242,7 +250,8 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText primary="Refunded" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+              primaryTypographyProps={{fontSize: '1.9vh'}} primary="Refunded" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </Link>
 
@@ -257,6 +266,7 @@ function Sidebarlist() {
               ></ListItemIcon>
 
               <ListItemText
+              primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Scheduled"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -273,7 +283,8 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText primary="Canceled" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+              primaryTypographyProps={{fontSize: '1.9vh'}} primary="Canceled" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </Link>
 
@@ -288,6 +299,7 @@ function Sidebarlist() {
               ></ListItemIcon>
 
               <ListItemText
+              primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="OfflinePayment"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -305,6 +317,7 @@ function Sidebarlist() {
               ></ListItemIcon>
 
               <ListItemText
+              primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Payment Failed"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -333,6 +346,7 @@ function Sidebarlist() {
               <RiRefund2Line className="text-white" />
             </ListItemIcon>
             <ListItemText
+            primaryTypographyProps={{fontSize: '1.9vh'}}
               className="-mx-3"
               primary="Refunded"
               sx={{ opacity: open ? 1 : 0 }}
@@ -353,6 +367,7 @@ function Sidebarlist() {
               ></ListItemIcon>
 
               <ListItemText
+              primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Refund Requests"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -370,11 +385,13 @@ function Sidebarlist() {
           <Link to="/addons">
             <ListItem disablePadding>
               <ListItemButton>
-                <ListItemIcon>
+                <ListItemIcon
+                
+                >
                   {/* <RxGroup /> */}
-                  <IoAddCircleSharp className="text-white" />
+                  <IoAddCircleSharp className="text-white ml-1" />
                 </ListItemIcon>
-                <ListItemText className="-mx-5" primary="Addons" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-5" primary="Addons" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -401,6 +418,7 @@ function Sidebarlist() {
               <IoDiamondOutline className="text-white" />
             </ListItemIcon>
             <ListItemText
+            primaryTypographyProps={{fontSize: '1.9vh'}}
               className="-mx-2"
               primary="Items"
               sx={{ opacity: open ? 1 : 0 }}
@@ -419,7 +437,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText primary="Add New" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}  primary="Add New" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </Link>
 
@@ -433,7 +451,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText primary="List" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} primary="List" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </Link>
 
@@ -447,7 +465,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Pending Item List"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -464,7 +482,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Product Gallery"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -481,7 +499,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Bulk Import"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -498,7 +516,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Bulk Export"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -526,7 +544,8 @@ function Sidebarlist() {
               {/* <SiCampaignmonitor  /> */}
               <ImTree className="text-white" />
             </ListItemIcon>
-            <ListItemText
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
+            
               className="-mx-2"
               primary="Categories"
               sx={{ opacity: open ? 1 : 0 }}
@@ -546,7 +565,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText primary="Category" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} primary="Category" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </Link>
 
@@ -560,7 +579,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Sub Category"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -577,7 +596,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Pending Item List"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -591,11 +610,11 @@ function Sidebarlist() {
           </div>
         </List>
 
-        <ListItem disablePadding sx={{ display: "block" }}>
+        <ListItem disablePadding className="-mb-2" sx={{ display: "block" }}>
           <ListItemButton
             onClick={() => toggleDropdown("Dropdown3")}
             sx={{
-              minHeight: 48,
+              minHeight: 42,
               justifyContent: open ? "initial" : "center",
               px: 2.5,
             }}
@@ -610,7 +629,7 @@ function Sidebarlist() {
             >
               <SiCampaignmonitor className="text-white" />
             </ListItemIcon>
-            <ListItemText
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
               className="-mx-2"
               primary="Campaigns"
               sx={{ opacity: open ? 1 : 0 }}
@@ -629,7 +648,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Basic Campaigns"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -648,7 +667,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Item Campaigns"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -660,12 +679,12 @@ function Sidebarlist() {
         </Collapse>
         <List>
           <Link to="/Banners">
-            <ListItem disablePadding>
+            <ListItem disablePadding className="-mb-3">
               <ListItemButton>
                 <ListItemIcon>
-                  <RxGroup className="text-white" />
+                  <RxGroup className="text-white ml-1" />
                 </ListItemIcon>
-                <ListItemText className="-mx-5" primary="Banners" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-5" primary="Banners" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -678,7 +697,7 @@ function Sidebarlist() {
                 <ListItemIcon>
                   <RxGroup className="text-white" />
                 </ListItemIcon>
-                <ListItemText className="-mx-5" primary="Other Banners" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-5" primary="Other Banners" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -686,12 +705,12 @@ function Sidebarlist() {
 
         <List>
           <Link to="/Coupons">
-            <ListItem disablePadding>
+            <ListItem disablePadding >
               <ListItemButton>
                 <ListItemIcon>
-                  <CiDiscount1 className="text-white" />
+                  <CiDiscount1 className="text-white ml-1" />
                 </ListItemIcon>
-                <ListItemText className="-mx-5" primary="Coupons" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-5" primary="Coupons" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -704,7 +723,7 @@ function Sidebarlist() {
                 <ListItemIcon>
                   <IoIosNotifications className="text-white" />
                 </ListItemIcon>
-                <ListItemText className="-mx-5" primary="Push Notification" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-5" primary="Push Notification" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -733,7 +752,7 @@ function Sidebarlist() {
             >
               <MdCategory className="text-white" />
             </ListItemIcon>
-            <ListItemText
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
               className="-mx-2"
               primary="Categories"
               sx={{ opacity: open ? 1 : 0 }}
@@ -752,7 +771,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Categories"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -769,7 +788,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary=" Sub Categories"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -786,7 +805,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Bulk Import"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -803,7 +822,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Bulk Export"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -818,7 +837,7 @@ function Sidebarlist() {
                 <ListItemIcon>
                   <MdEditAttributes className="text-white" />
                 </ListItemIcon>
-                <ListItemText className="-mx-5" primary="Attributes" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-5" primary="Attributes" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -830,7 +849,7 @@ function Sidebarlist() {
                 <ListItemIcon>
                   <FaBalanceScale className="text-white" />
                 </ListItemIcon>
-                <ListItemText className="-mx-5" primary="Units" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-5" primary="Units" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -854,7 +873,7 @@ function Sidebarlist() {
             >
               <FaShoppingCart className="text-white" />
             </ListItemIcon>
-            <ListItemText
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
               className="-mx-2"
               primary="Product Setup"
               sx={{ opacity: open ? 1 : 0 }}
@@ -873,7 +892,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText primary="Add New" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} primary="Add New" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </Link>
           <Link onClick={""} to={""}>
@@ -886,7 +905,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText primary="List" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} primary="List" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </Link>
           <Link onClick={""} to={""}>
@@ -899,7 +918,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Product Gallery"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -915,7 +934,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="New Item Request"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -931,7 +950,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText primary="Review" sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} primary="Review" sx={{ opacity: open ? 1 : 0 }} />
             </ListItemButton>
           </Link>
           <Link onClick={""} to={""}>
@@ -944,7 +963,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Bulk Import"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -960,7 +979,7 @@ function Sidebarlist() {
                 }}
               ></ListItemIcon>
 
-              <ListItemText
+              <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
                 primary="Bulk Export"
                 sx={{ opacity: open ? 1 : 0 }}
               />
@@ -977,7 +996,7 @@ function Sidebarlist() {
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon></ListItemIcon>
-                <ListItemText className="-mx-5" primary="New Stores" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-5" primary="New Stores" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -987,7 +1006,7 @@ function Sidebarlist() {
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon></ListItemIcon>
-                <ListItemText className="-mx-5" primary="Add Stores" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-5" primary="Add Stores" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -997,7 +1016,7 @@ function Sidebarlist() {
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon></ListItemIcon>
-                <ListItemText className="-mx-5" primary="Stores List" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-5" primary="Stores List" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -1007,7 +1026,7 @@ function Sidebarlist() {
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon></ListItemIcon>
-                <ListItemText className="-mx-5" primary="Recommended Store" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-5" primary="Recommended Store" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -1017,7 +1036,7 @@ function Sidebarlist() {
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon></ListItemIcon>
-                <ListItemText className="-mx-5" primary="Bulk Import" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-5" primary="Bulk Import" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -1027,7 +1046,7 @@ function Sidebarlist() {
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon></ListItemIcon>
-                <ListItemText className="-mx-5" primary="Bulk Export" />
+                <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-5" primary="Bulk Export" />
               </ListItemButton>
             </ListItem>
           </Link>
@@ -1043,7 +1062,7 @@ function Sidebarlist() {
             <ListItemIcon>
               <FaGear fill="white" />
             </ListItemIcon>
-            <ListItemText className="-mx-3" primary="Store Config" />
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-3" primary="Store Config" />
           </ListItemButton>
         </ListItem>
       </Link>
@@ -1053,7 +1072,7 @@ function Sidebarlist() {
             <ListItemIcon>
               <IoMdHome fill="white" />
             </ListItemIcon>
-            <ListItemText className="-mx-3" primary="My Shop" />
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-3" primary="My Shop" />
           </ListItemButton>
         </ListItem>
       </Link>
@@ -1063,7 +1082,7 @@ function Sidebarlist() {
             <ListItemIcon>
               <HiOutlineWallet fill="white" />
             </ListItemIcon>
-            <ListItemText className="-mx-3" primary="My Wallet" />
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-3" primary="My Wallet" />
           </ListItemButton>
         </ListItem>
       </Link>
@@ -1073,7 +1092,7 @@ function Sidebarlist() {
             <ListItemIcon>
               <FaBuildingColumns fill="white" />
             </ListItemIcon>
-            <ListItemText className="-mx-3" primary="Disbursement Method" />
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-3" primary="Disbursement Method" />
           </ListItemButton>
         </ListItem>
       </Link>
@@ -1083,7 +1102,7 @@ function Sidebarlist() {
             <ListItemIcon>
               <MdStarOutline className="text-white text-xl" />
             </ListItemIcon>
-            <ListItemText className="-mx-3" primary="Review" />
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-3" primary="Review" />
           </ListItemButton>
         </ListItem>
       </Link>
@@ -1094,7 +1113,7 @@ function Sidebarlist() {
             <ListItemIcon>
               <IoMdChatbubbles className="text-white text-xl" />
             </ListItemIcon>
-            <ListItemText className="-mx-3" primary="Chat" />
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-3" primary="Chat" />
           </ListItemButton>
         </ListItem>
       </Link>
@@ -1108,7 +1127,7 @@ function Sidebarlist() {
             <ListItemIcon>
               <PiMoneyFill className="text-white text-xl" />
             </ListItemIcon>
-            <ListItemText className="-mx-3" primary="Expence Report" />
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-3" primary="Expence Report" />
           </ListItemButton>
         </ListItem>
       </Link>
@@ -1118,7 +1137,7 @@ function Sidebarlist() {
             <ListItemIcon>
               <RiPhoneCameraFill className="text-xl text-white" />
             </ListItemIcon>
-            <ListItemText className="-mx-3" primary="Disbursment Report" />
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-3" primary="Disbursment Report" />
           </ListItemButton>
         </ListItem>
       </Link>
@@ -1131,7 +1150,7 @@ function Sidebarlist() {
             <ListItemIcon>
               <BsIncognito className="text-white text-xl" />
             </ListItemIcon>
-            <ListItemText className="-mx-3" primary="Employee Role" />
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-3" primary="Employee Role" />
           </ListItemButton>
         </ListItem>
       </Link>
@@ -1155,7 +1174,7 @@ function Sidebarlist() {
           >
             <FaUserLarge className="text-white" />
           </ListItemIcon>
-          <ListItemText
+          <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}
             className=""
             primary="Employee"
             sx={{ opacity: open ? 1 : 0 }}
@@ -1176,7 +1195,7 @@ function Sidebarlist() {
               }}
             ></ListItemIcon>
 
-            <ListItemText  primary="Add new" sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}}  primary="Add new" sx={{ opacity: open ? 1 : 0 }} />
             {/* <span className="ml-auto bg-blue-500 text-white rounded-full px-2 py-1 text-xs">
           {30}
         </span> */}
@@ -1194,7 +1213,7 @@ function Sidebarlist() {
               }}
             ></ListItemIcon>
 
-            <ListItemText primary="List" sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} primary="List" sx={{ opacity: open ? 1 : 0 }} />
             {/* <span className="ml-auto bg-blue-500 text-white rounded-full px-2 py-1 text-xs">
           {30}
         </span> */}
@@ -1241,7 +1260,7 @@ function Sidebarlist() {
             <ListItemIcon>
               <BadgeIcon />
             </ListItemIcon>
-            <ListItemText className="-mx-3" primary="Employee Role" />
+            <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} className="-mx-3" primary="Employee Role" />
           </ListItemButton>
         </ListItem>
       </Link>
@@ -1264,7 +1283,7 @@ function Sidebarlist() {
           >
             <RiTeamLine />
           </ListItemIcon>
-          <ListItemText primary="Employee" sx={{ opacity: open ? 1 : 0 }} />
+          <ListItemText primaryTypographyProps={{fontSize: '1.9vh'}} primary="Employee" sx={{ opacity: open ? 1 : 0 }} />
           {Isopen.Dropdown3 ? <ExpandLessIcon /> : <ExpandMoreIcon />}
         </ListItemButton>
       </ListItem> */}

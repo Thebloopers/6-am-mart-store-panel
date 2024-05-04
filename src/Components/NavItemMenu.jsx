@@ -19,9 +19,9 @@ const NavItemMenu = () => {
     });
   };
   return (
-    <div className="text-black w-full">
+    <div className="text-black">
       <div className="flex justify-end items-center gap-2 w-full">
-        <div className="flex justify-start items-center text-[#00868F]">
+        <div className="flex justify-start items-center text-[#00868F] ">
           <TbWorld className="text-[#00868F]" />
           <p>En</p>
           <IoIosArrowDown className="text-sm mx-2" />
