@@ -666,21 +666,12 @@ const Addnew = () => {
                     required
                   />
                 </div>
-
-<<<<<<< HEAD
-                      {autoComplete.variants.length > 0 ? (
-
-
+                    {autoComplete.variants.length > 0 ? (
                         <div className="flex flex-col gap-2 p-2 w-full">
                           <div className="flex justify-between items-center">
-
-
-
                               {autoComplete.variants.map((item, index) => (
                             <form  >
                                 <div key={index}>
-
-                                
                               <h1>{item.label}</h1>
                               {/* <input onBlur={(e) => attributeTable(e)} className="border rounded p-1" type="text" placeholder="Enter choices value" /> */}
                               <FormControl >
@@ -736,25 +727,6 @@ const Addnew = () => {
                                     ))}
                                   </tbody>
                                 </table>
-=======
-                {autoComplete.variants.length > 0 ? (
-                  <div className="flex flex-col gap-2 p-2 w-full">
-                    <div className="flex justify-between items-center">
-                      {autoComplete.variants.map((item, index) => (
-                        <form>
-                          <div key={index}>
-                            <h1>{item.label}</h1>
-                            {/* <input onBlur={(e) => attributeTable(e)} className="border rounded p-1" type="text" placeholder="Enter choices value" /> */}
-                            <FormControl>
-                              <div className={"container"}>
-                                {values.map((item, index) => (
-                                  <Chip
-                                    size="small"
-                                    onDelete={() => handleDelete(item, index)}
-                                    label={item}
-                                  />
-                                ))}
->>>>>>> c2ae3d7f1d842b6bb89b0380babc3cf500265024
                               </div>
                               <Input
                                 value={currValue}
