@@ -132,7 +132,7 @@ function Newsale() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
       {/* add new customer modal  */}
 
       <dialog id="add_customer_modal" className="modal modal-top w-1/2 m-auto">
@@ -272,10 +272,10 @@ function Newsale() {
                               alt=""
                               className="rounded-t-lg w-[150px] h-[130px]"
                             />
-                            <h1 className=" text-gray-700 text-lg">
+                            <h1 className=" text-gray-700 md:text-lg text-[2.3vh]">
                               {item.name}
                             </h1>
-                            <h1 className="text-orange-500 text-xl">
+                            <h1 className="text-orange-500 md:text-xl">
                               ₹ {item.price}.00
                             </h1>
                           </button>
@@ -300,14 +300,14 @@ function Newsale() {
                                   className="w-[150px] border border-gray-300 rounded-lg  object-cover"
                                 />
                                 <div>
-                                  <h1 className="text-xl font-semibold text-start ">
+                                  <h1 className="md:text-xl font-semibold text-start ">
                                     {item.name}
                                   </h1>
                                   <div className="flex justify-start items-center gap-3 ">
-                                    <p className="text-lg text-gray-500 text font-light">
-                                      Price :
+                                    <p className="md:text-lg  text-gray-500 text font-light">
+                                      Price:
                                     </p>
-                                    <p className="text-xl font-normal my-2">
+                                    <div className="md:text-xl font-normal my-2 float-end">
                                       {" "}
                                       {item?.discounttype == "Amount"
                                         ? (
@@ -320,7 +320,7 @@ function Newsale() {
                                       <del className="text-sm text-gray-500 font-light mx-2">
                                         ₹{item?.price}
                                       </del>
-                                    </p>
+                                    </div>
                                   </div>
                                   <div className="flex justify-start items-center gap-3">
                                     <p className="text-lg text-gray-500 text font-light">
