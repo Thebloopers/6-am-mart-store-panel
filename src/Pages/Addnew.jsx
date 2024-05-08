@@ -386,7 +386,7 @@ const Addnew = () => {
 
 
       <form onSubmit={handleSubmit}>
-        <div className="flex justify-between items-start gap-4">
+        <div className="flex md:flex-row flex-col justify-between items-start gap-4">
 
           <div className="w-full shadow-lg border border-gray-100 rounded-lg">
             <h1 className="border-b-2 border-gray-300 p-4">Item Info</h1>
@@ -774,7 +774,7 @@ const Addnew = () => {
               </div>
 
 
-        <div className="my-10 shadow-lg p-5">
+        {/* <div className="my-10 shadow-lg p-5"> */}
 
 
           <div className='border py-3 mt-5 shadow-lg rounded-lg'>
@@ -795,7 +795,7 @@ const Addnew = () => {
             <button className="btn font-bold" style={{ padding: "6px 30px" }}>Reset</button>
             <button type="submit" className="btn font-bold bg-sky-600 text-white" style={{ padding: "6px 30px" }}>Submit</button>
           </div>
-        </div>
+        {/* </div> */}
       </form>
     </div >
 

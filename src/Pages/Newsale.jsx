@@ -266,9 +266,8 @@ function Newsale() {
                             onClick={() => openModal(modalId)}
                           >
                             <img
-                              src={`${import.meta.env.VITE_IMAGE_URL}/${
-                                item.itemThumbnail[0]
-                              }`}
+                              src={`${import.meta.env.VITE_IMAGE_URL}/${item.itemThumbnail[0]
+                                }`}
                               alt=""
                               className="rounded-t-lg w-[150px] h-[130px]"
                             />
@@ -291,42 +290,39 @@ function Newsale() {
                                   ✕
                                 </button>
                               </form>
-                              <div className="font-bold text-lg flex justify-start items-center gap-x-8">
+                              <div className="font-bold  flex justify-start items-center gap-5 w-fit">
                                 <img
-                                  src={`${import.meta.env.VITE_IMAGE_URL}/${
-                                    item.itemThumbnail[0]
-                                  }`}
+                                  src={`${import.meta.env.VITE_IMAGE_URL}/${item.itemThumbnail[0]
+                                    }`}
                                   alt=""
                                   className="w-[150px] border border-gray-300 rounded-lg  object-cover"
                                 />
                                 <div>
-                                  <h1 className="md:text-xl font-semibold text-start ">
+                                  <h1 className="md:text-xl font-semibold text-center ">
                                     {item.name}
                                   </h1>
-                                  <div className="flex justify-start items-center gap-3 ">
-                                    <p className="md:text-lg  text-gray-500 text font-light">
+                                  <div className="flex  gap-3  ">
+                                    <p className=" text-[2.1vh]  text-gray-500 text font-light">
                                       Price:
                                     </p>
-                                    <div className="md:text-xl font-normal my-2 float-end">
-                                      {" "}
-                                      {item?.discounttype == "Amount"
-                                        ? (
-                                            item?.price - item?.discount
-                                          ).toFixed(2)
-                                        : (
-                                            item?.price -
-                                            (item?.discount / 100) * item?.price
-                                          ).toFixed(2)}{" "}
-                                      <del className="text-sm text-gray-500 font-light mx-2">
+                                    <div className=" text-[2.1vh] font-normal -space-x-3">
+                                      <h1>
+                                        {" "}
+                                        {item?.discounttype == "Amount"
+                                          ? (item?.price - item?.discount).toFixed(2)
+                                          : (item?.price - (item?.discount / 100) * item?.price).toFixed(2)}{" "}
+                                      </h1>
+                                      <del className=" text-[1.8vh] text-gray-500 font-light ">
                                         ₹{item?.price}
                                       </del>
                                     </div>
+
                                   </div>
                                   <div className="flex justify-start items-center gap-3">
-                                    <p className="text-lg text-gray-500 text font-light">
+                                    <p className=" text-gray-500 text-[2.1vh] font-light">
                                       Discount :
                                     </p>
-                                    <p className="text-xl font-normal">
+                                    <p className=" text-[2.1vh] font-normal">
                                       ₹
                                       {item?.discounttype == "Amount"
                                         ? item?.discount
@@ -389,9 +385,9 @@ function Newsale() {
                                   {item?.discounttype == "Amount"
                                     ? (item?.price - item?.discount).toFixed(2)
                                     : (
-                                        item?.price -
-                                        (item?.discount / 100) * item?.price
-                                      ).toFixed(2)}
+                                      item?.price -
+                                      (item?.discount / 100) * item?.price
+                                    ).toFixed(2)}
                                 </h1>
                               </div>
 
@@ -514,9 +510,8 @@ function Newsale() {
                         >
                           <td className="py-2 px-4 flex flex-col justify-center items-center gap-y-3 w-full">
                             <img
-                              src={`${import.meta.env.VITE_IMAGE_URL}/${
-                                item?.item?.itemThumbnail[0]
-                              }`}
+                              src={`${import.meta.env.VITE_IMAGE_URL}/${item?.item?.itemThumbnail[0]
+                                }`}
                               className="w-16 rounded-lg h-12"
                             />
                             <h1 className="w-full text-sm">
@@ -590,13 +585,13 @@ function Newsale() {
                             ₹
                             {item?.item?.discounttype == "Amount"
                               ? (
-                                  item?.item?.price - item?.item?.discount
-                                ).toFixed(2)
+                                item?.item?.price - item?.item?.discount
+                              ).toFixed(2)
                               : (
-                                  item?.item?.price -
-                                  (item?.item?.discount / 100) *
-                                    item?.item?.price
-                                ).toFixed(2)}
+                                item?.item?.price -
+                                (item?.item?.discount / 100) *
+                                item?.item?.price
+                              ).toFixed(2)}
                           </td>
                           <td className="py-2 px-4">
                             <button
@@ -657,27 +652,36 @@ function Newsale() {
               <div className=" mt-3 mb-3">
                 <p className="mb-3">Paid By</p>
                 <ul className="flex flex-col sm:flex-row gap-2">
-                  <li>
-                    <label className="block">
-                      <input
-                        type="radio"
-                        name="type"
-                        value="cash"
-                        hidden
-                        checked
-                      />
-                      <span className="text-sm border py-3 rounded-lg px-4 sm:px-12 block text-center sm:inline-block bg-[#334257] text-white">
+                  {/* <li> */}
+                    {/* <label className="block"> */}
+                      <button
+                      className="text-sm border py-3 rounded-lg px-4  block text-center sm:inline-block bg-[#334257] text-white h-fit"
+                        type="button"
+                        name="COD"
+                        value="Cash on Delivery"
+                      >
+                        Cash on Delivery
+                      </button>
+                      {/* <span className="text-sm border py-3 rounded-lg px-4 sm:px-12 block text-center sm:inline-block bg-[#334257] text-white">
                         Cash On Delivery
-                      </span>
-                    </label>
+                      </span> */}
+                    {/* </label> */}
+                  {/* </li> */}
+                  <li>
+                    {/* <label className="block"> */}
+                      <button className="text-sm border bg-[#334257] w-full py-3 px-4  block text-center sm:inline-block text-white rounded-lg" type="radio" name="type" value="wallet" hidden >Online</button>
+                      {/* <span className="text-sm border py-3 px-4 sm:px-12 block text-center sm:inline-block text-[#334257] rounded-lg">
+                        Wallet
+                      </span> */}
+                    {/* </label> */}
                   </li>
                   <li>
-                    <label className="block">
-                      <input type="radio" name="type" value="wallet" hidden />
-                      <span className="text-sm border py-3 px-4 sm:px-12 block text-center sm:inline-block text-[#334257] rounded-lg">
+                    {/* <label className="block"> */}
+                      <button className="text-sm border bg-[#334257] w-full py-3 px-4  block text-center sm:inline-block text-white rounded-lg" type="radio" name="type" value="wallet" hidden >Offline</button>
+                      {/* <span className="text-sm border py-3 px-4 sm:px-12 block text-center sm:inline-block text-[#334257] rounded-lg">
                         Wallet
-                      </span>
-                    </label>
+                      </span> */}
+                    {/* </label> */}
                   </li>
                 </ul>
               </div>

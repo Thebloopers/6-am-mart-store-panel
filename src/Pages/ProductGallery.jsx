@@ -13,8 +13,8 @@ const ProductGallery = () => {
   console.log(data, "data2")
 
   return (
-    <div className="">
-      <div className="flex justify-normal overflow-hidden items-center gap-x-3">
+    <div className="max-[450px]:w-[350px] md:w-auto ">
+      <div className="flex justify-normal overflow-hidden items-center gap-x-3 mt-20">
         <img
           src="https://6ammart-admin.6amtech.com/public/assets/admin/img/group.png"
           alt=""
@@ -50,11 +50,11 @@ const ProductGallery = () => {
 
         <div key={index} className="bg-violet-300">
 
-          <div className="shadow-lg flex bg-red-300 rounded-lg my-3 mt-10 border border-gray-300  w-full overflow-x-scroll px-5  ">
+          <div className="shadow-lg flex bg-red-300 rounded-lg my-3 mt-10 border border-gray-300  w-full overflow-x-auto px-5  ">
             <div className="flex bg-blue-300 justify-between items-start w-full md:w-[40vw] ">
 
 
-              <div className="flex justify-between items-start px-5 ">
+              <div className="flex justify-between items-start px-5 w-full">
 
 
                 <img
@@ -85,7 +85,7 @@ const ProductGallery = () => {
                 </div>
               </div>
 
-            </div>
+            </div>  
 
 
 

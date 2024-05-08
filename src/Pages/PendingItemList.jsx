@@ -77,13 +77,13 @@ const PendingItemList = () => {
         <h1 className="text-2xl text-gray-800 font-bold">Item List</h1>
       </div>
       <div className="rounded-lg shadow-lg py-5 px-4 my-6">
-        <div className="flex justify-between items-center  my-4 p-3">
+        <div className="flex md:flex-row flex-col justify-between items-center gap-3 md:gap-0 my-4 p-3">
           <h1 className="font-bold text-gray-800 text-2xl">Item List</h1>
           <div className="form-control w-full max-w-[350px]">
             <input
               type="text"
               placeholder="Search"
-              className="input input-bordered w-24 md:w-auto"
+              className="input input-bordered w-full md:w-auto"
             />
           </div>
         </div>

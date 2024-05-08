@@ -154,7 +154,7 @@ const List = () => {
 
       <div className="my-6 p-4 rounded-lg ">
         <h1 className="text-2xl font-bold text-gray-800">Search data</h1>
-        <div className="flex justify-between items-center p-4 my-4">
+        <div className="flex md:flex-row flex-col gap-4 md:gap-0 justify-between items-center p-4 my-4">
           <select className="select w-full max-w-[350px] border border-gray-200 focus:outline-none ">
             <option disabled selected>
               All Catyegory

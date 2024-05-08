@@ -27,15 +27,17 @@ function Coupons() {
      <CouponsInput/>
      <Card className="">
      <div className="p-2">
-        <div className="flex items-center mb-4">
-          <h2 className="text-lg font-semibold text-gray-800 mr-4">
+        <div className="flex flex-col md:flex-row gap-2 items-center mb-4">
+          <div className="flex justify-center items-center">
+          <h2 className="md:text-lg font-semibold text-gray-800 mr-4">
           Coupon List
 
           </h2>
-          <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
+          <span className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full">
             2
           </span>
-          <form className="ml-auto flex items-center">
+          </div>
+          <form className="md:ml-auto flex items-center">
             <input
               id="datatableSearch"
               type="search"

@@ -145,7 +145,7 @@ const Category = () => {
       </div>
       <div className="p-1 md:p-5 rounded border mt-5 py-5 shadow">
         <div className="category flex gap-4 justify-end flex-wrap md:flex-nowrap px-4 ">
-          <label className="input border border-gray-200 flex items-center gap-2 focus:outline-none ">
+          <label className="input border border-gray-200 flex items-center gap-2 focus:outline-none w-full md:w-auto ">
             <input
               type="text"
               className="grow"
@@ -165,7 +165,7 @@ const Category = () => {
               />
             </svg>
           </label>
-          <select onChange={() => exportToCsv()} className="select w-f max-w-xs border border-sky-400 text-sky-400 focus:outline-sky-100 focus:border-none">
+          <select onChange={() => exportToCsv()} className="select w-f max-w-xs border w-full md:w-auto border-sky-400 text-sky-400 focus:outline-sky-100 focus:border-none text-center">
             <option >Export</option>
             <option>Excel</option>
             <option>.CSV</option>

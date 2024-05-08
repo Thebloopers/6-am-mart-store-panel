@@ -76,7 +76,7 @@ const BulkImport = () => {
         <h1 className="text-lg font-bold ">Import items file</h1>
         <input type="file" className="mt-3 w-full border py-2 px-3" />
 
-        <div className="flex gap-4 justify-end flex-wrap md:flex-nowrap mt-5 px-4 ">
+        <div className=" gap-4 justify-end grid grid-flow-row md:grid-flow-col grid-cols-2 mt-5 px-4 ">
           <button className="btn font-bold" style={{ padding: "6px 30px" }}>
             Reset
           </button>
@@ -103,12 +103,12 @@ const BulkImport = () => {
         </div>
         <hr />
         <div className="px-4 mt-3">
-          <button className="border-green-500 bg-transparent text-green-500 text-xl font-normal border px-7 py-3 rounded my-8">
+          <button className="border-green-500 bg-transparent text-green-500 md:text-xl font-normal border px-7 py-3 rounded my-8">
             Add new variation
           </button>
         </div>
         <div className="mt-3 px-5 flex justify-end">
-          <button className="border-cyan-400 bg-cyan-400 text-white text-lg font-normal border px-7 py-2 rounded my-8 text-end">
+          <button className="border-cyan-400 bg-cyan-400 text-white md:text-lg font-normal border px-7 py-2 rounded my-8 text-end">
             Generate
           </button>
         </div>

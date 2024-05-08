@@ -53,7 +53,7 @@ function Banners() {
           autoComplete="off"
         />
 
-        <div className="flex w-full justify-between  gap-4">
+        <div className="flex w-full justify-between flex-col md:flex-row  gap-4">
           <div className="w-full">
             <label className="form-control w-full max-w-xl my-2">
               <div className="label my-2">
@@ -102,7 +102,7 @@ function Banners() {
                   <span class="font-semibold">Click to upload</span> or drag and
                   drop
                 </p>
-                <p class="text-xs text-gray-500 dark:text-gray-400">
+                <p class="text-xs text-gray-500 dark:text-gray-400 px-3">
                   Banner Image Ratio 3:1 Image format : jpg, png, jpeg | Maximum
                   Size: 2 MB
                 </p>

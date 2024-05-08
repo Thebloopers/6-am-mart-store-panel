@@ -21,7 +21,7 @@ function BasicCampaigns() {
   ];
   return (
     <>
-      <div className="container mx-auto px-4 py-8 w-[350px] md:w-auto">
+      <div className="container mx-auto px-2 py-8 w-[350px] md:w-auto">
         <div className="bg-white shadow-md rounded-lg">
           <div className="px-6 py-4">
             <div className="flex md:flex-row flex-col gap-5 justify-between items-center">
@@ -37,20 +37,22 @@ function BasicCampaigns() {
               </div>
               <Link
                 href="https://6ammart-admin.6amtech.com/admin/campaign/basic/add-new"
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2"
               >
-                <AddCircleIcon />
-                Add new campaign
+                <AddCircleIcon fontSize="small" />
+                <h1 className="text-[2.3vh]">Add new campaign</h1>
               </Link>
             </div>
             <hr className="my-4" />
-            <div className="flex md:flex-row flex-col items-center mb-4">
+            <div className="flex md:flex-row flex-col items-center mb-4 gap-3">
+              <div className="flex justify-center items-center">
               <h2 className="text-lg font-semibold text-gray-800 mr-4">
                 Campaign list
               </h2>
-              <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full">
+              <span className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full">
                 2
               </span>
+              </div>
               <form className="ml-auto flex items-center">
                 <input
                   id="datatableSearch"

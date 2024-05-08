@@ -137,7 +137,7 @@ const StoreConfig = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='w-fit flex items-end gap-3 text-[2vh]'>
+                        <div className='w-fit flex items-end gap-3 text-[2vh] mt-3 md:mt-0'>
                             <button className='px-8 py-2 rounded-md bg-gray-100'>Reset</button>
                             <button className='px-8 py-2 rounded-md bg-cyan-500 text-white'>Update</button>
                         </div>

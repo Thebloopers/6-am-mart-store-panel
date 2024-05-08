@@ -27,7 +27,7 @@ const MyShop = () => {
                             <div className='h-full rounded-full md:overflow-hidden'>
                                 <img className='w-[140px] h-[140px]' src="https://images.unsplash.com/photo-1615915468538-0fbd857888ca?q=80&w=1968&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
                             </div>
-                            <div className='flex flex-col gap-2'>
+                            <div className='flex flex-col gap-2 mt-5 md:mt-0'>
                                 <h1>Name: Something</h1>
                                 <h1>Phone : +1**********</h1>
                                 <h1>Address : House: 00, Road: 00, Test City</h1>
