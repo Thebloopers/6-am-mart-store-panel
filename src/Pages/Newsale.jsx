@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import withAuth from "../HOC/withAuth";
 import CustomDropdown from "../Components/CustomDropdown";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { getAllCategories, getAllSubCategories } from "../helpers/categories";
 import { getAllProductsOfStore } from "../helpers/products";
+import { addCustomer, getAllCustomer } from "../helpers/Customer";
 import { FaShoppingCart } from "react-icons/fa";
+import Swal from "sweetalert2";
 import CustomDropdown1 from "../Components/CustomDropdown1";
 
 function Newsale() {
   const [counter, setCounter] = useState(1);
+
+  const [isLoading, setIsLoading] = useState(false); // Step 1: Add isLoading state
 
   const incrementCounter = () => {
     setCounter(counter + 1);
@@ -62,6 +66,18 @@ function Newsale() {
   useEffect(() => {
     refetch2();
   }, [categoryId]); // rerun effect when categoryId changes
+
+  // billing section API
+
+  const [storeId, setStoreId] = useState(null);
+
+  const {
+    isLoading: isLoading3,
+    isError: isError3,
+    isSuccess: isSuccess3,
+    data: data3,
+    refetch: refetch3,
+  } = useQuery(["customers", { cookies }], () => getAllCustomer(cookies));
 
   const foods = [
     {
@@ -131,75 +147,175 @@ function Newsale() {
     if (modal) modal.close();
   }
 
+  const dialogRef = useRef(null);
+
+  useEffect(() => {
+    // Accessing the dialog element by its ID and setting it to the ref
+    dialogRef.current = document.getElementById("add_customer_modal");
+  }, []);
+
+  const closeDialog = () => {
+    if (dialogRef.current) {
+      dialogRef.current.close();
+    }
+  };
+
+  const customerMutation = useMutation(addCustomer, {
+    onSuccess: (data) => {
+      setIsLoading(false);
+      if (data.success === true) {
+        Swal.fire({
+          icon: "success",
+          title: data?.message || "User created",
+          timer: "2000",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#33996a",
+          showClass: {
+            popup: "swal2-show",
+            backdrop: "swal2-backdrop-show",
+            icon: "swal2-icon-show",
+          },
+          hideClass: {
+            popup: "swal2-hide",
+            backdrop: "swal2-backdrop-hide",
+            icon: "swal2-icon-hide",
+          },
+        });
+        refetch3();
+
+        return closeDialog();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: data?.error || data?.errors || "something went wrong",
+          timer: "2000",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#33996a",
+          showClass: {
+            popup: "swal2-show",
+            backdrop: "swal2-backdrop-show",
+            icon: "swal2-icon-show",
+          },
+          hideClass: {
+            popup: "swal2-hide",
+            backdrop: "swal2-backdrop-hide",
+            icon: "swal2-icon-hide",
+          },
+        });
+        return closeDialog();
+      }
+    },
+    onError: () => {
+      setIsLoading(false); // Set isLoading to false on error
+    },
+    onMutate: () => {
+      setIsLoading(true); // Set isLoading to true when mutation starts
+    },
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setIsLoading(true); // Step 2: Set isLoading to true before mutation
+
+    const formData = new FormData(event.target);
+
+    customerMutation.mutate({ formData, cookies: cookies });
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       {/* add new customer modal  */}
 
-      <dialog id="add_customer_modal" className="modal modal-top w-[95%] md:w-1/2 m-auto ">
+      <dialog
+        id="add_customer_modal"
+        className="modal modal-top w-[95%] md:w-1/2 m-auto "
+      >
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add new customer</h3>
-
-          <div className="flex justify-around items-center gap-x-5 md:gap-x-0">
-            <label className="form-control w-full max-w-xs focus:outline-none ">
-              <div className="label">
-                <span className="label-text">First Name</span>
-              </div>
-              <input
-                type="text"
-                placeholder="First name"
-                className="input input-bordered w-full max-w-xs "
-              />
-            </label>
-
-            <label className="form-control w-full max-w-xs focus:outline-none">
-              <div className="label">
-                <span className="label-text">Last Name</span>
-              </div>
-              <input
-                type="text"
-                placeholder="Last name"
-                className="input input-bordered w-full max-w-xs focus:outline-blue-200"
-              />
-            </label>
-          </div>
-          <div className="flex justify-around items-center mt-3 gap-x-5 md:gap-x-0">
-            <label className="form-control w-full max-w-xs focus:outline-none">
-              <div className="label">
-                <span className="label-text">Email*</span>
-              </div>
-              <input
-                type="text"
-                placeholder="Ex: Ex@gmail.com here"
-                className="input input-bordered w-full max-w-xs "
-              />
-            </label>
-
-            <label className="form-control w-full md:max-w-xs focus:outline-none">
-              <div className="label w-full">
-                <span className="label-text w-full">Phone( country code)*</span>
-              </div>
-              <input
-                type="text"
-                placeholder="Phone"
-                className="input input-bordered w-full max-w-xs focus:outline-blue-200"
-              />
-            </label>
-          </div>
-
-          <div className="modal-action">
-            <form
-              method="dialog"
-              className="flex justify-end items-center gap-x-4"
-            >
-              <button className="btn">Close</button>
-              <button className="btn">Reset</button>
-              <button className="btn btn-info text-white">Submit</button>
+          <form onSubmit={handleSubmit}>
+            <h3 className="font-bold text-lg ">Add new customer</h3>
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
             </form>
-          </div>
+
+            <div className="modal-action"></div>
+            <div className="flex justify-around items-center gap-x-5 md:gap-x-0">
+              <label className="form-control w-full max-w-xs focus:outline-none ">
+                <div className="label">
+                  <span className="label-text">First Name</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="First name"
+                  className="input input-bordered w-full max-w-xs "
+                  name="firstName"
+                />
+              </label>
+
+              <label className="form-control w-full max-w-xs focus:outline-none">
+                <div className="label">
+                  <span className="label-text">Last Name</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Last name"
+                  className="input input-bordered w-full max-w-xs focus:outline-blue-200"
+                  name="lastName"
+                />
+              </label>
+            </div>
+            <div className="flex justify-around items-center mt-3 gap-x-5 md:gap-x-0">
+              <label className="form-control w-full max-w-xs focus:outline-none">
+                <div className="label">
+                  <span className="label-text">Email*</span>
+                </div>
+                <input
+                  type="email"
+                  placeholder="Ex: Ex@gmail.com here"
+                  className="input input-bordered w-full max-w-xs "
+                  name="email"
+                />
+              </label>
+
+              <label className="form-control w-full md:max-w-xs focus:outline-none">
+                <div className="label w-full">
+                  <span className="label-text w-full">
+                    Phone( country code)*
+                  </span>
+                </div>
+                <input
+                  type="tel"
+                  placeholder="Phone"
+                  className="input input-bordered w-full max-w-xs focus:outline-blue-200"
+                  maxLength={10}
+                  name="phone"
+                />
+              </label>
+            </div>
+
+            <div className="modal-action flex justify-end items-center gap-x-4">
+              <button className="btn" type="button">
+                Reset
+              </button>
+              <button
+                className="btn btn-info text-white"
+                type="submit"
+                disabled={isLoading ? true : false}
+              >
+                {isLoading ? (
+                  <span className="loading loading-spinner loading-md"></span>
+                ) : (
+                  "Submit"
+                )}
+              </button>
+            </div>
+          </form>
         </div>
       </dialog>
 
-      <div className="order--pos-left bg-white rounded-lg shadow-lg p-6">
+      <div className="order--pos-left bg-white rounded-lg shadow-lg p-6 ">
         <h2 className="text-xl font-semibold mb-4">Product Selection</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="col-span-full sm:col-span-1">
@@ -434,7 +550,8 @@ function Newsale() {
           </div>
         </div>
       </div>
-      <div className="order--pos-right bg-white rounded-lg shadow-lg md:p-6">
+
+      <div className="order--pos-right bg-white rounded-lg shadow-lg md:p-6 ">
         <h2 className="text-xl font-semibold md:mb md:py-0 md:px-0 px-3 py-4">
           Billing Section
         </h2>
@@ -451,16 +568,34 @@ function Newsale() {
                 category={customer}
                 /> */}
 
-                <select className="select w-full md:max-w-xs">
-                  <option disabled selected>
-                    Select Customer
+                <select
+                  className="select w-full md:max-w-xs uppercase"
+                >
+                  <option disabled selected className="uppercase">
+                    Walk in Customer
                   </option>
-                  <option>Homer</option>
-                  <option>Marge</option>
-                  <option>Bart</option>
-                  <option>Lisa</option>
-                  <option>Maggie</option>
+                  {data3?.storeuser?.map((item) => (
+                    // <option>Homer</option>,
+                    <option
+                      className=" text-sm m-2 uppercase"
+                      value={item._id}
+                    >
+                      {item?.firstName + " " + item?.lastName} - {item?.phone}
+                    </option>
+                    // <option className="p-2 text-sm m-2" value={item._id}>{item?.firstName + " " + item?.lastName}{item?.phone} </option>
+                  ))}
                 </select>
+
+                {/* <select
+              className="select w-full max-w-xs border-gray-300"
+              onChange={(event) => {
+                return setCategoryId(event.target.value);
+              }}
+            >
+              {data3?.category?.map((item) => (
+                <option value={item._id}>{item?.name}</option>
+              ))}
+            </select> */}
               </label>
             </div>
 
@@ -715,9 +850,6 @@ function Newsale() {
                   </button>
                 </div>
               </div> */}
-
-
-
             </form>
           </div>
         </div>

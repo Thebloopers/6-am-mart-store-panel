@@ -206,7 +206,7 @@ function Layout(props) {
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
-        {/* <Toolbar /> */}
+        <Toolbar />
         <Outlet />
       </Box>
     </Box>
