@@ -249,7 +249,7 @@ function Banners() {
 
         {/* Form Actions */}
         <div className="flex justify-end gap-5 mt-5">
-          <Button variant="contained">Reset</Button>
+          <Button >Reset</Button>
           <Button variant="contained">Submit</Button>
         </div>
       </div>

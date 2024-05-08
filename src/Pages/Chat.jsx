@@ -136,7 +136,7 @@ const Chat = () => {
 
                 </div>
 
-                <div className="order--pos-right  md:w-[67%] w-fit   rounded-lg shadow-lg p-6">
+                <div className="order--pos-right  md:w-[67%]    rounded-lg shadow-lg p-6">
                     <div className=" border-gray-200  overflow-hidden">
                         <div className="px-4  py-1 border-b border-gray-200">
 
@@ -171,10 +171,10 @@ const Chat = () => {
                                 ))}
                             </div>
                         </div>
-                        <div className="absolute bottom-0 left-0 rounded px-3 py-2 bg-gray-100 border border-gray-300 flex items-center">
+                        <div className="absolute bottom-0 left-0 w-full p-4 bg-gray-100 border-t border-gray-300 flex items-center">
                             <input
                                 type="text"
-                                className="flex-grow py-2 px-3 border text-[2vh] border-gray-300 rounded-lg focus:outline-none"
+                                className="flex-grow py-2 px-3 border border-gray-300 rounded-lg focus:outline-none"
                                 placeholder="Type a message..."
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
@@ -204,7 +204,7 @@ const Chat = () => {
                             </button>
 
                             <button
-                                className="ml-2 md:px-4 py-1 px-2 text-[2vh] bg-[#006161] text-white rounded-[4px]"
+                                className="ml-2 md:px-4 py-2 bg-[#006161] text-white rounded-[4px]"
                                 onClick={handleSendMessage}
                             >
                                 Send
