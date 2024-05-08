@@ -333,7 +333,9 @@ const Addnew = () => {
   };
 
   const handleKeyUp = (e) => {
+    e.preventDefault();
     console.log(e.keyCode);
+
 
     if (e.target.value.length <= 0) {
       return;
@@ -697,6 +699,7 @@ const Addnew = () => {
                               <h1>{item.label}</h1>
                               {/* <input onBlur={(e) => attributeTable(e)} className="border rounded p-1" type="text" placeholder="Enter choices value" /> */}
                               <FormControl >
+                              
                                 <div className={"container"}>
                                   {values.map((item, index) => (
                                     <Chip size="small" onDelete={() => handleDelete(item, index)} label={item} />
@@ -707,6 +710,7 @@ const Addnew = () => {
                                   value={currValue}
                                   onChange={handleChange}
                                   onBlur={handleKeyUp}
+                                  onSubmit={handleKeyUp}
                                   className="w-60"
                                 />
                               </FormControl>

@@ -159,9 +159,9 @@ const Dashboard = () => {
 
       <div className="p-8 my-6 shadow-lg rounded-lg w-full">
         <div className="flex md:justify-between md:items-center flex-col md:flex-row justify-start gap-y-3 ">
-          <div className="text-xl text-gray-800 flex  justify-start gap-1 items-start">
+          <div className="text-xl text-gray-800 flex w-fit justify-start gap-1 items-start">
             <IoStatsChart />
-            <h1 className="font-semibold text-lg text-gray-700">
+            <h1 className="font-semibold md:text-lg text-[2.3vh] text-gray-700 ">
               Dashboard order statistics
             </h1>
           </div>
@@ -346,9 +346,9 @@ const Dashboard = () => {
             <div className="bg-white shadow-md rounded-lg overflow-hidden">
               <div className="px-4 py-3">
                 <div className="flex justify-between items-center mb-2">
-                  <div className="flex justify-start items-center gap-x-3 text-lg  text-gray-700 my-5">
+                  <div className="flex justify-start items-center gap-x-3 md:text-lg  text-gray-700 my-5">
                   <MdOutlineBarChart />
-                    <h1>Top Selling Item</h1>
+                    <h1 className="font-semibold">Top Selling Item</h1>
                   </div>
                   <a
                     // href="https://6ammart-admin.6amtech.com/admin/store/list"
@@ -396,12 +396,12 @@ const Dashboard = () => {
           </div> */}
 
           <div className="col-span-1 md:col-span-2 lg:col-span-1">
-            <div className="bg-white shadow-md rounded-lg overflow-hidden">
-              <div className="px-4 py-3">
+            <div className="bg-white rounded-lg overflow-hidden">
+              <div className="py-3">
                 <div className="flex justify-between items-center mb-2">
-                <div className="flex justify-start items-center gap-x-2 text-lg  text-gray-700 my-5">
+                <div className="flex justify-start items-center gap-x-2 md:text-lg  text-gray-700 my-5">
                   <IoIosStar />
-                    <h1>Top Rated Item</h1>
+                    <h1 className="font-semibold">Top Rated Item</h1>
                   </div>
                   <a
                     // href="https://6ammart-admin.6amtech.com/admin/store/list"
@@ -424,7 +424,7 @@ const Dashboard = () => {
                       />
                       <div className="p-4">
                         <div className="cont" title={item.title}>
-                          <span className="text-base font-medium text-gray-800">
+                          <span className="md:text-base md:font-medium font-semibold text-gray-800 text-[2.2vh]">
                             {item.title}
                           </span>
                           <Rating
