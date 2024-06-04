@@ -9,7 +9,17 @@ import { getAllProductsOfStore } from "../helpers/products";
 import { addCustomer, getAllCustomer } from "../helpers/Customer";
 import { FaShoppingCart } from "react-icons/fa";
 import Swal from "sweetalert2";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import CustomDropdown1 from "../Components/CustomDropdown1";
+import { createPosOrder } from "../helpers/Order";
+import { FaPen } from "react-icons/fa";
+import { APIProvider } from "@vis.gl/react-google-maps";
+import GoogleMap from "../Map/googlemap";
+import { TbBuildingStore } from "react-icons/tb";
+import OrderInvoiceGenrate from "../Components/OrderInvoiceGenrate";
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 function Newsale() {
   const [counter, setCounter] = useState(1);
@@ -34,16 +44,27 @@ function Newsale() {
 
   const [cart, setCart] = useState([]);
 
-  const [customer, setCustomer] = useState(null);
-
-  const onCustomerSelect = (selected) => {
-    setCustomer(selected);
-  };
+  const [customerId, setCustomerId] = useState(null); //customerId state
+  const [paymentMethod, setPaymentMethod] = useState("Offline"); //customerId state
 
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["store"]);
 
   const [categoryId, setCategoryId] = useState(null);
+
+  const [points, setPoints] = useState(null); //For maps state
+
+  const [address, setAddress] = useState({
+    name: "",
+    contactNumber: "",
+    pinCode: "",
+    house: "",
+    floor: "",
+    road: "",
+    completeAddress: "",
+    latitude: points && points[0],
+    longitude: points && points[1],
+  }); //For store the address
 
   const {
     isError: isError1,
@@ -222,6 +243,321 @@ function Newsale() {
     customerMutation.mutate({ formData, cookies: cookies });
   };
 
+  const printDiv = (divName) => {
+    const printContents = document.getElementById(divName).innerHTML;
+    const originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+  };
+
+  //place order mutation
+  const placeOrderMutation = useMutation(createPosOrder, {
+    onSuccess: (data) => {
+      setIsLoading(false);
+      console.log(data, 'data')
+      if (data.success === true) {
+        Swal.fire({
+          icon: "success",
+          title: data?.message || "order created",
+          timer: "3000",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#33996a",
+          showClass: {
+            popup: "swal2-show",
+            backdrop: "swal2-backdrop-show",
+            icon: "swal2-icon-show",
+          },
+          hideClass: {
+            popup: "swal2-hide",
+            backdrop: "swal2-backdrop-hide",
+            icon: "swal2-icon-hide",
+          },
+        }).then((result) => {
+          if (result.isConfirmed || Swal.DismissReason.timer) {
+            // <OrderInvoiceGenrate />
+            <>
+              <dialog id="my_modal_5" className="modal">
+                <div className="modal-box">
+                  <h1 className="font-bold text-start">Print invoice</h1>
+                  <div className="flex justify-center items-center gap-x-4 mt-7">
+                    <button className="p-3 bg-blue-400 text-white rounded-lg">
+                      Proceed, if thermal printer is ready
+                    </button>
+                    <button className="p-3 bg-red-500 text-white rounded-lg">
+                      Back
+                    </button>
+                  </div>
+                  <div className="border border-gray-300 mt-3"></div>
+                  <form method="dialog">
+                    {/* if there is a button in form, it will close the modal */}
+                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                      ✕
+                    </button>
+                  </form>
+                  <div className="text-5xl flex justify-center items-center">
+                    <TbBuildingStore />
+                  </div>
+
+                  <div className="content container mx-auto py-8 font-bold">
+                    <div className="flex justify-center items-center mb-6">
+                      <div className="space-x-2">
+                        <button
+                          className="btn bg-[#006161] text-white hover:bg-[#007981]"
+                          onClick={() => printDiv("printableArea")}
+                        >
+                          Print Invoice
+                        </button>
+                        <button className=" btn  btn-error text-white ">
+                          Back
+                        </button>
+                      </div>
+                    </div>
+                    <div id="printableArea">
+                      <div className="max-w-3xl mx-auto bg-white shadow-md rounded-md px-8 py-6">
+                        <h1 className="text-xl font-bold">Order Invoice</h1>
+
+                        <hr className="my-4 non-printable" />
+                        <div className="flex flex-col justify-center items-center mb-6">
+                          <div className=" flex flex-col items-center text-center ">
+                            <img
+                              className="w-[20px]"
+                              src="https://6ammart-admin.6amtech.com/public/assets/admin/img/invoice-logo.png"
+                              alt="Company Logo"
+                            />
+                            <div className="text-sm mt-2">
+                              <h2 className="font-semibold">Online Market</h2>
+                              <p>House: 00, Road: 00, City-000, Country</p>
+                              <p>Phone: 0**********</p>
+                            </div>
+                          </div>
+                          <div className="text-center">
+                            <img
+                              className="h-2 md:w-[75%] object-cover m-auto"
+                              src="https://6ammart-admin.6amtech.com/public/assets/admin/img/invoice-star.png"
+                              alt="Star"
+                            />
+                            <h2 className="text-lg font-semibold">
+                              Cash Receipt
+                            </h2>
+                            <img
+                              className=" h-2 md:w-[75%] object-cover m-auto"
+                              src="https://6ammart-admin.6amtech.com/public/assets/admin/img/invoice-star.png"
+                              alt="Star"
+                            />
+                          </div>
+                          <div>
+                            <p className="text-sm">Order id: 100099</p>
+                            <p className="text-sm">02/Jan/2024 04:54:pm</p>
+                          </div>
+                        </div>
+                        <div className="mb-6 text-center text-sm">
+                          <h3 className="text-lg font-semibold mb-2">
+                            Customer Details
+                          </h3>
+                          <p>Contact Name: Marjahan Sultana</p>
+                          <p>Phone: +8*********000</p>
+                          <p>Address: Unknown Location Found</p>
+                        </div>
+                        <table className=" sm:w-[50%] m-auto mb-6 text-sm">
+                          <thead>
+                            <tr className="">
+                              <th className="text-left ">Description</th>
+                              <th className="text-center ">Quantity</th>
+                              <th className="text-right">Price</th>
+                            </tr>
+                          </thead>
+                          <tbody className="text-sm">
+                            <tr>
+                              <td className="text-left ">
+                                Suruchi Premium Green Chili Pickle <br />
+                                <div className="price">$ 90.00</div>
+                              </td>
+                              <td className="text-center ">3</td>
+                              <td className="text-right ">$ 270.00</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        {/* <div className="mb-6  p-2 w-[50%] m-auto">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-start">
+            <div className=''>
+              <dt className=''>
+             <p>Subtotal (TAX Included):</p> 
+              <span>$ 270.00</span>
+              <span className='text-right'>$ 270.00</span>
+              </dt>
+              <div className=''>Discount:
+              <span>- $ 21.60</span>
+              </div>
+              <dt>Coupon Discount:
+              <span>- $ 0.00</span>
+              </dt>
+            <div className=''>
+              <div>
+              <span className='text-right'>+ $ 0.00</span>
+              </div>
+              <div className='flex'>Delivery Charge:
+              <p>$ 600.00</p>
+              </div>
+
+              </div>
+              <div className='flex justify-between'>
+              <div>Additional Charge:</div>
+              <div>+ $ 10.00</div>
+              </div>
+              
+              <div className='flex justify-between'>
+
+              <div  className="font-semibold">Total:</div>
+              <div className="font-semibold">$ 858.40</div>
+              </div>
+              </div>
+            </div>
+            
+         
+          <div className="flex justify-between mt-4 border-t w-full">
+            <div className='flex gap-8'>
+              <p>Paid by: Wallet</p>
+              <p>Amount: 858.4</p>
+              <p>Change: 0</p>
+            </div>
+          </div>
+        </div> */}
+                        <div className="sm:w-[50%] m-auto text-sm">
+                          <dl className="text-right">
+                            <div className="col-span-1 md:col-span-2 flex justify-between my-2">
+                              <dt className="col-6 ">
+                                Subtotal (TAX Included):
+                              </dt>
+                              <dd className="col-6 ">$ 270.00</dd>
+                            </div>
+                            <div className="col-span-1 md:col-span-2 flex justify-between mb-2">
+                              <dt className="col-6">Discount:</dt>
+                              <dd className="col-6">- $ 21.60</dd>
+                            </div>
+                            <div className="col-span-1 md:col-span-2 flex justify-between mb-2">
+                              <dt className="col-6">Coupon discount:</dt>
+                              <dd className="col-6">- $ 0.00</dd>
+                            </div>
+                            <div className="col-span-1 md:col-span-2 flex justify-between mb-2">
+                              <dt className="col-6">Delivery man tips:</dt>
+                              <dd className="col-6">+ $ 0.00</dd>
+                            </div>
+                            <div className="col-span-1 md:col-span-2 flex justify-between mb-2">
+                              <dt className="col-6">Delivery charge:</dt>
+                              <dd className="col-6">$ 600.00</dd>
+                            </div>
+                            <div className="col-span-1 md:col-span-2 flex justify-between mb-2">
+                              <dt className="col-6">Additional Charge:</dt>
+                              <dd className="col-6">+ $ 10.00</dd>
+                            </div>
+                            <div className="col-span-1 md:col-span-2 total flex justify-between">
+                              <dt>Total:</dt>
+                              <dd>$ 858.40</dd>
+                            </div>
+                          </dl>
+                          <div className="flex flex-row justify-between border-t border-gray-300 pt-4">
+                            <span className="flex">
+                              <span>Paid by:</span>
+                              <span className="ml-1">Wallet</span>
+                            </span>
+                            <span>
+                              <span>Amount:</span>
+                              <span className="ml-1">858.4</span>
+                            </span>
+                            <span>
+                              <span>Change:</span>
+                              <span className="ml-1">0</span>
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col items-center justify-center">
+                          <img
+                            className="h-2 md:w-[53%] object-cover m-auto"
+                            src="https://6ammart-admin.6amtech.com/public/assets/admin/img/invoice-star.png"
+                            alt="Star"
+                          />
+                          <h2 className="text-lg font-semibold">THANK YOU</h2>
+                          <img
+                            className="h-2  md:w-[53%] object-cover m-auto"
+                            src="https://6ammart-admin.6amtech.com/public/assets/admin/img/invoice-star.png"
+                            alt="Star"
+                          />
+                          <div className="text-sm mt-2 text-center">
+                            © Bootsup Digital .
+                            <span className="block">
+                              2021-2023 BoostUp Digital.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="py-4">
+                    Press ESC key or click on ✕ button to close
+                  </p>
+                </div>
+              </dialog>
+            </>;
+          }
+        });
+        // return navigate("/allorder");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: data?.error || data?.errors || "something went wrong",
+          timer: "2000",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#33996a",
+          showClass: {
+            popup: "swal2-show",
+            backdrop: "swal2-backdrop-show",
+            icon: "swal2-icon-show",
+          },
+          hideClass: {
+            popup: "swal2-hide",
+            backdrop: "swal2-backdrop-hide",
+            icon: "swal2-icon-hide",
+          },
+        });
+        return;
+      }
+    },
+    onError: () => {
+      setIsLoading(false); // Set isLoading to false on error
+    },
+    onMutate: () => {
+      setIsLoading(true); // Set isLoading to true when mutation starts
+    },
+  });
+
+  const handleOrderSubmit = (event) => {
+    event.preventDefault();
+    setIsLoading(true); // Step 2: Set isLoading to true before mutation
+
+    Swal.fire({
+      icon: "question",
+      title: "Are You Sure ?",
+      text:"You Want to Place this Order",
+      
+      confirmButtonText: "Ok",
+      confirmButtonColor: "#33996a",
+      showClass: {
+        popup: "swal2-show",
+        backdrop: "swal2-backdrop-show",
+        icon: "swal2-icon-show",
+      },
+      hideClass: {
+        popup: "swal2-hide",
+        backdrop: "swal2-backdrop-hide",
+        icon: "swal2-icon-hide",
+      },
+    }).then({});
+
+    placeOrderMutation.mutate({ cart, customerId, paymentMethod, address, cookies });
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
       {/* add new customer modal  */}
@@ -359,7 +695,7 @@ function Newsale() {
                   placeholder="Search by product name"
                   disabled
                 />
-                <div className="grid grid-cols-2 flex-wrap items-center gap-x-6 mt-4 cursor-pointer h-full ">
+                <div className="grid grid-cols-2 md:grid-cols-3 justify-between md:justify-center flex-wrap items-start  mt-4 cursor-pointer h-full ">
                   {isLoading2 ? (
                     <span className="loading loading-spinner loading-lg text-center text-5xl text-gray-400 ml-[50%] mt-[40%]"></span>
                   ) : data2?.data?.length === 0 ? (
@@ -380,21 +716,23 @@ function Newsale() {
                           <button
                             type="button"
                             onClick={() => openModal(modalId)}
+                            className="flex flex-col justify-start items-center w-[150px] "
                           >
                             <img
                               src={`${import.meta.env.VITE_IMAGE_URL}/${
                                 item.itemThumbnail[0]
                               }`}
                               alt=""
-                              className="rounded-t-lg w-[150px] h-[130px]"
+                              className="rounded-t-lg w-full md:w-[150px] h-[130px]"
                             />
-                            <h1 className=" text-gray-700 md:text-lg text-[2.3vh]">
+                            <h1 className=" text-gray-700 md:text-lg mt-2 md:font-semibold  text-center w-[150px]">
                               {item.name}
                             </h1>
                             <h1 className="text-orange-500 md:text-xl">
                               ₹ {item.price}.00
                             </h1>
                           </button>
+
                           <dialog id={modalId} className="modal">
                             <div className="modal-box">
                               <form method="dialog">
@@ -570,13 +908,15 @@ function Newsale() {
 
                 <select
                   className="select w-full md:max-w-xs uppercase"
+                  onChange={(event) => setCustomerId(event.target.value)}
                 >
                   <option disabled selected className="uppercase">
                     Walk in Customer
                   </option>
-                  {data3?.storeuser?.map((item) => (
+                  {data3?.storeuser?.map((item, op) => (
                     // <option>Homer</option>,
                     <option
+                      key={op}
                       className=" text-sm m-2 uppercase"
                       value={item._id}
                     >
@@ -611,8 +951,209 @@ function Newsale() {
               Add new customer
             </button>
           </div>
-          <div className="pos-delivery-option rounded-lg md:p-2  w-full ">
+
+          <dialog
+            id="my_modal_3"
+            className="modal modal-top w-[50%] h-[100vh] m-auto"
+          >
+            <div className="modal-box">
+              <h1 className="text-center font-semibold mb-4">
+                Delivery Address
+              </h1>
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                  ✕
+                </button>
+              </form>
+
+              <div className="flex justify-between items-center">
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text">Contact person name*</span>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Full Name"
+                    className="input input-bordered w-full max-w-xs"
+                    value={address?.name}
+                    onChange={(e) =>
+                      setAddress({ ...address, name: e.target.value })
+                    }
+                  />
+                </label>
+
+                <label className="form-control w-full max-w-xs">
+                  <div className="label">
+                    <span className="label-text">Contact Number*</span>
+                  </div>
+                  <input
+                    type="tel"
+                    placeholder="Enter Your number"
+                    defaultValue={+91}
+                    maxLength={10}
+                    className="input input-bordered w-full max-w-xs"
+                    value={address?.contactNumber}
+                    onChange={(e) =>
+                      setAddress({ ...address, contactNumber: e.target.value })
+                    }
+                  />
+                </label>
+              </div>
+
+              <div className="flex justify-between items-center mt-5">
+                <div className="flex justify-between items-center gap-x-4">
+                  <label className="form-control w-full max-w-[150px]">
+                    <div className="label">
+                      <span className="label-text">Road</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Ex: 4th"
+                      className="input input-bordered w-full max-w-xs"
+                      value={address?.road}
+                      onChange={(e) =>
+                        setAddress({ ...address, road: e.target.value })
+                      }
+                    />
+                  </label>
+                  <label className="form-control w-full max-w-[150px]">
+                    <div className="label">
+                      <span className="label-text">House</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Ex: 45/c"
+                      className="input input-bordered w-full max-w-xs"
+                      value={address?.house}
+                      onChange={(e) =>
+                        setAddress({ ...address, house: e.target.value })
+                      }
+                    />
+                  </label>
+                </div>
+
+                <div className="flex justify-between items-center gap-x-4">
+                  <label className="form-control w-full max-w-[150px] ">
+                    <div className="label">
+                      <span className="label-text">Floor</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Ex: 1A"
+                      className="input input-bordered w-full max-w-xs "
+                      value={address?.floor}
+                      onChange={(e) =>
+                        setAddress({ ...address, floor: e.target.value })
+                      }
+                    />
+                  </label>
+                  <label className="form-control w-full max-w-[150px]">
+                    <div className="label">
+                      <span className="label-text">PinCode</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Type here"
+                      className="input input-bordered w-full max-w-xs"
+                      value={address?.pinCode}
+                      onChange={(e) =>
+                        setAddress({ ...address, pinCode: e.target.value })
+                      }
+                    />
+                  </label>
+                </div>
+              </div>
+
+              <div className="border border-green-400 px-5 py-3 my-3 rounded-lg">
+                <div className="flex justify-between items-center gap-x-4">
+                  <label className="form-control w-full max-w-[300px] ">
+                    <div className="label">
+                      <span className="label-text">Longitude*</span>
+                    </div>
+                    <input
+                      type="text"
+                      disabled
+                      className="input input-bordered w-full max-w-xs "
+                    />
+                  </label>
+                  <label className="form-control w-full max-w-[300px]">
+                    <div className="label">
+                      <span className="label-text">Latitude*</span>
+                    </div>
+                    <input
+                      type="text"
+                      disabled
+                      className="input input-bordered w-full max-w-xs"
+                    />
+                  </label>
+                </div>
+
+                <label className="form-control w-full max-w-full mt-4">
+                  <div className="label">
+                    <span className="label-text">Complete Address</span>
+                  </div>
+                  <textarea
+                    className="textarea textarea-bordered h-24"
+                    placeholder="Address"
+                    value={address?.completeAddress}
+                    onChange={(e) =>
+                      setAddress({
+                        ...address,
+                        completeAddress: e.target.value,
+                      })
+                    }
+                  ></textarea>
+                </label>
+
+                <div className="flex justify-between items-center  my-5">
+                  <h1>
+                    * pin the address in the map to calculate delivery fee
+                  </h1>
+                  <button
+                    type="button"
+                    className="rounded-lg text-white bg-blue-400 p-3"
+                  >
+                    Delivery Fee: 0 ₹
+                  </button>
+                </div>
+
+                <APIProvider apiKey={API_KEY} libraries={["places"]}>
+                  <div style={{ height: "50vh", marginBottom: "69px" }}>
+                    <GoogleMap
+                      polygon={false}
+                      marker={true}
+                      setPoints={setPoints}
+                    />
+                  </div>
+                </APIProvider>
+              </div>
+            </div>
+          </dialog>
+
+          <div className="pos-delivery-option rounded-lg md:p-2  w-full flex justify-between items-center">
             <h5 className="text-xl p-3">Delivery Information</h5>
+            <div
+              className="text-xl p-3 text-gray-700 cursor-pointer"
+              onClick={() => document.getElementById("my_modal_3").showModal()}
+            >
+              {" "}
+              <FaPen />
+            </div>
+          </div>
+
+          <div className="flex justify-between items-start w-full gap-x-5 pl-5 mb-3">
+            <div className="flex flex-col">
+              {address?.name && <h1>Customer : {address?.name}</h1>}
+              {address?.contactNumber && (
+                <h1>phone : {address?.contactNumber}</h1>
+              )}
+            </div>
+            <p className="text-gray-500">
+              {address?.completeAddress && (
+                <h1>Customer : {address?.completeAddress}</h1>
+              )}
+            </p>
           </div>
         </form>
 
@@ -755,33 +1296,59 @@ function Newsale() {
               </div>
             </div>
           </div>
-          <div className="box p-3">
-            <div className="grid grid-cols-1 md:grid-cols-2 text-dark my-5">
-              <div className="col-span-1 md:col-span-2 flex flex-col">
-                <div className="text-sm border-b pb-2 flex justify-between p-2">
-                  <span>Subtotal (TAX Included):</span>
-                  <span className="text-right">₹ 0.00</span>
+
+          <form onSubmit={handleOrderSubmit}>
+            <div className="box p-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 text-dark my-5">
+                {console.log(cart)}
+
+                <div className="col-span-1 md:col-span-2 flex flex-col">
+                  <div className="text-sm border-b pb-2 flex justify-between p-2">
+                    <span>Subtotal (TAX Included):</span>
+                    <span className="text-right">
+                      ₹{" "}
+                      {cart.reduce(
+                        (total, item) => total + item?.item?.price * item?.qty,
+                        0
+                      )}
+                    </span>
+                  </div>
+                  <div className="text-sm border-b pb-2 flex justify-between p-2">
+                    <span>Discount :</span>
+                    <span className="text-right">
+                      {" "}
+                      ₹{" "}
+                      {cart.reduce(
+                        (total, item) =>
+                          total + item?.item?.discount * item?.qty,
+                        0
+                      )}
+                    </span>
+                  </div>
+                  <div className="text-sm border-b pb-2 flex justify-between p-2">
+                    <span>Delivery fee :</span>
+                    <span className="text-right" id="delivery_price">
+                      ₹ {0.0}
+                    </span>
+                  </div>
+                  <div className="text-sm border-b pb-2 flex justify-between p-2">
+                    <span>Total :</span>
+                    <span className="text-right" id="delivery_price">
+                      ₹{" "}
+                      {cart.reduce(
+                        (total, item) =>
+                          total +
+                          (item?.item?.price - item?.item?.discount) *
+                            item?.qty,
+                        0
+                      )}
+                    </span>
+                  </div>
                 </div>
-                <div className="text-sm border-b pb-2 flex justify-between p-2">
-                  <span>Discount :</span>
-                  <span className="text-right"> ₹ 0.00</span>
-                </div>
-                <div className="text-sm border-b pb-2 flex justify-between p-2">
-                  <span>Delivery fee :</span>
-                  <span className="text-right" id="delivery_price">
-                    ₹ 0.00
-                  </span>
-                </div>
-                <div className="text-sm border-b pb-2 flex justify-between p-2">
-                  <span>Total :</span>
-                  <span className="text-right" id="delivery_price">
-                    $ 0.00
-                  </span>
-                </div>
+
+                <div className="col-span-1 md:col-span-1"></div>
               </div>
-              <div className="col-span-1 md:col-span-1"></div>
-            </div>
-            <form>
+
               <input
                 type="hidden"
                 name="_token"
@@ -791,30 +1358,63 @@ function Newsale() {
               <input type="hidden" name="user_id" id="customer_id" />
               <div className=" mt-3 mb-3">
                 <p className="mb-3">Paid By</p>
-                <ul className="flex flex-col sm:flex-row gap-2">
-                  <li>
-                    <label className="block">
+
+                <div className="flex justify-start items-center gap-x-4">
+                  <div className="form-control">
+                    <label className="label cursor-pointer flex justify-start items-center gap-x-2">
                       <input
                         type="radio"
-                        name="type"
-                        value="cash"
-                        hidden
+                        name="radio-4"
+                        className="radio radio-accent text-sm"
                         checked
+                        onClick={(event) =>
+                          setPaymentMethod(
+                            event.currentTarget.nextSibling.textContent
+                          )
+                        }
                       />
-                      <span className="text-sm border py-3 rounded-lg px-4 sm:px-12 block text-center sm:inline-block bg-[#334257] text-white">
-                        Cash On Delivery
-                      </span>
+                      <span className="label-text">Cash On Delivery</span>
                     </label>
-                  </li>
-                  <li>
-                    <label className="block">
-                      <input type="radio" name="type" value="wallet" hidden />
-                      <span className="text-sm border py-3 px-4 sm:px-12 block text-center sm:inline-block text-[#334257] rounded-lg">
-                        Wallet
-                      </span>
+                  </div>
+                  <div className="form-control">
+                    <label className="label cursor-pointer flex justify-start items-center gap-x-2">
+                      <input
+                        type="radio"
+                        name="radio-4"
+                        className="radio radio-accent text-sm"
+                        checked
+                        onClick={(event) =>
+                          setPaymentMethod(
+                            event.currentTarget.nextSibling.textContent
+                          )
+                        }
+                      />
+                      <span className="label-text">Online</span>
                     </label>
-                  </li>
-                </ul>
+                  </div>
+                  <div className="form-control">
+                    <label className="label cursor-pointer flex justify-start items-center gap-x-2">
+                      <input
+                        type="radio"
+                        name="radio-4"
+                        className="radio radio-accent text-sm"
+                        checked
+                        onClick={(event) =>
+                          setPaymentMethod(
+                            event.currentTarget.nextSibling.textContent
+                          )
+                        }
+                      />
+                      <span className="label-text">Offline</span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* <div className="flex justify-between items-center">
+                <button type="button"> <input type="radio" name="radio-4" className="radio radio-accent text-sm" checked />Cash on Delivery</button>
+                <button>Online</button>
+                <button>Offline</button>
+               </div> */}
               </div>
 
               <div className="flex justify-center md:justify-start items-center  gap-x-6 w-full md:mt-12 my-12">
@@ -824,9 +1424,15 @@ function Newsale() {
                 >
                   Clear Cart
                 </button>
+
+                {/* You can open the modal using document.getElementById('ID').showModal() method */}
+
                 <button
                   type="submit"
                   className="h-12 border text-white px-5 md:px-12 rounded-md bg-[#24BAC3] flex justify-center items-center sm:flex sm:justify-end"
+                  onClick={() =>
+                    document.getElementById("my_modal_5").showModal()
+                  }
                 >
                   Place Order
                 </button>
@@ -850,8 +1456,8 @@ function Newsale() {
                   </button>
                 </div>
               </div> */}
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
